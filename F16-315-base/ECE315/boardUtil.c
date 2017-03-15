@@ -102,7 +102,7 @@ void sonar_config_gpio(void)
 	//J8
 	gpio_config_digital_enable( GPIOE_BASE, PE0 | PE1);
 	gpio_config_alternate_function( GPIOE_BASE, PE0 | PE1);
-	gpio_config_port_control( GPIOE_BASE, GPIO_PCTL_PE0_U0RX | GPIO_PCTL_PE1_U0TX);
+	//gpio_config_port_control( GPIOE_BASE, GPIO_PCTL_PE0_U0RX | GPIO_PCTL_PE1_U0TX);
 	
 }
 
@@ -117,7 +117,6 @@ void serialDebugInit(void)
     SYSCTL_RCGCUART_R0, 
     SYSCTL_PRUART_R0
   );
-	
 }
 
 void sonarInit(void){

@@ -4,7 +4,7 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 I:\ECE315\F16-315-base\ECE315\ece353_base_project.uvprojx
-Project File Date:  10/31/2016
+Project File Date:  03/15/2017
 
 <h2>Output:</h2>
 Rebuild target 'Target 1'
@@ -12,22 +12,20 @@ compiling main.c...
 compiling boardUtil.c...
 boardUtil.c(90): warning:  #940-D: missing return statement at end of non-void function "uart_init_lab1"
   }
-boardUtil.c(94): warning:  #223-D: function "initializeADC" declared implicitly
+boardUtil.c(99): warning:  #223-D: function "initializeADC" declared implicitly
         initializeADC(ADC0_BASE);
-boardUtil.c: 2 warnings, 0 errors
+boardUtil.c(299): warning:  #188-D: enumerated type mixed with another type
+         return 0;
+boardUtil.c: 3 warnings, 0 errors
 compiling interrupts.c...
-interrupts.c(14): warning:  #1-D: last line of file ends without a newline
+interrupts.c(5): warning:  #1-D: last line of file ends without a newline
   }
-interrupts.c(7): warning:  #550-D: variable "val" was set but never used
-        uint32_t val;
-interrupts.c(3): warning:  #177-D: variable "count" was declared but never referenced
-  static int count = 0; 
-interrupts.c: 3 warnings, 0 errors
+interrupts.c: 1 warning, 0 errors
 assembling startup_TM4C123.s...
 compiling system_TM4C123.c...
 linking...
-Program Size: Code=2664 RO-data=652 RW-data=8 ZI-data=4096  
-".\obj\ece353_base_project.axf" - 0 Error(s), 5 Warning(s).
+Program Size: Code=2716 RO-data=652 RW-data=8 ZI-data=4096  
+".\obj\ece353_base_project.axf" - 0 Error(s), 4 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -54,27 +52,13 @@ Package Vendor: Keil
       Source file:   CMSIS\UserCodeTemplates\ARM\ITM_Retarget.c
 
    * Component: Keil::Device:Startup:1.0.0
+      Include file:  Device\Include\TM4C123\TM4C123.h
       Source file:   Device\Source\system_TM4C123.c
       Source file:   Device\Source\ARM\startup_TM4C123.s
-      Include file:  Device\Include\TM4C123\TM4C123.h
-E315\F16-315-base\ECE315\RTE
-  C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include
-  C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123
-
-<h2>Collection of Component Files used:</h2>
-
-   * Component: ARM::CMSIS:CORE:3.30.0
-      Source file:   CMSIS\UserCodeTemplates\ARM\ITM_Retarget.c
+  CMSIS\UserCodeTemplates\ARM\ITM_Retarget.c
 
    * Component: Keil::Device:Startup:1.0.0
+      Include file:  Device\Include\TM4C123\TM4C123.h
       Source file:   Device\Source\system_TM4C123.c
       Source file:   Device\Source\ARM\startup_TM4C123.s
-      Include file:  Device\Include\TM4C123\TM4C123.h
-Target not created
-urce file:   CMSIS\UserCodeTemplates\ARM\ITM_Retarget.c
-
-   * Component: Keil::Device:Startup:1.0.0
-      Source file:   Device\Source\system_TM4C123.c
-      Source file:   Device\Source\ARM\startup_TM4C123.s
-      Include file:  Device\Include\TM4C123\TM4C123.h
 Target not created
