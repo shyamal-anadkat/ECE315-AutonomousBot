@@ -57,6 +57,8 @@ extern bool isdone;
 int 
 main(void)
 {
+int displaycount = 0; 
+int analogvalue = 0;
 
   int displaycount = 0; 
   int analogvalue = 0;
@@ -73,8 +75,6 @@ main(void)
 			 
 	
   SysTick_Config(2500);
-
-
   while(1)
   {
 		if(isdone == true){
