@@ -1,5 +1,20 @@
 #include "interrupts.h"
+#include "adc.h"
 
-void SysTick_Handler(void) {
+
+
+volatile bool isdone; 
+
+int SysTick_Handler(void) {
+static int count = 0; 
+	int anval;
 	
-}
+	if(count == 200) {
+		count = 0;
+		isdone = true;
+	} 
+	count++; 
+  }
+	
+	
+	
