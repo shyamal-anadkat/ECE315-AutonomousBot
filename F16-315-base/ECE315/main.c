@@ -83,9 +83,8 @@ main(void)
 			displaycount++;
 		}
 		if(displaycount == 100) {
-			uartTxPoll(UART0_BASE, "analogvalue");
-			uartTxPoll(UART0_BASE, "analogvalue");
-			uartTxPoll(UART0_BASE, "analogvalue");
+			uartTxPoll(UART0_BASE, "Analog Value:\n");
+			uartTxPoll(UART0_BASE, analogvalue);
 		}
 	}
   }
