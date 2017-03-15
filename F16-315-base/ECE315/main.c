@@ -31,13 +31,15 @@
 
 #include "TM4C123.h"
 #include "boardUtil.h"
+#include "adc.h"
 
 
 
 //*****************************************************************************
 // Global Variables
 //*****************************************************************************
-volatile bool AlertLab1;
+
+  
 //*****************************************************************************
 //*****************************************************************************
 void initializeBoard(void)
@@ -50,6 +52,8 @@ void initializeBoard(void)
 
 //*****************************************************************************
 //*****************************************************************************
+
+extern bool isdone;
 int 
 main(void)
 {
@@ -61,20 +65,28 @@ main(void)
   uartTxPoll(UART0_BASE,"**************************************\n\r");
   uartTxPoll(UART0_BASE,"* ECE315 Default Project\n\r");
   uartTxPoll(UART0_BASE,"**************************************\n\r");
-	
-	// Interrupt once every 10us assuming 50MHz clock
-  SysTick_Config(2500);
-	
-
   
   // Infinite Loop
   while(1)
   {
-		      if(AlertLab1)
-      {
-	       // Do something once every 100ms
- 
-            AlertLab1 = false;
-      }
+			 
+	
+  SysTick_Config(2500);
+	int displaycount = 0; 
+  int analogvalue = 0;
+
+  while(1)
+  {
+		if(isdone == true){
+			analogvalue = getADCValue(ADC0_BASE,0 );
+			isdone = false; 
+			displaycount++;
+		}
+		if(displaycount == 100) {
+			uartTxPoll(UART0_BASE, "Analog Value:\n");
+			uartTxPoll(UART0_BASE, analogvalue);
+		}
+	}
   }
 }
+
