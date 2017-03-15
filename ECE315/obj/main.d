@@ -18,3 +18,4 @@
 .\obj\main.o: ..\include\gpioPort.h
 .\obj\main.o: ..\include\pc_buffer.h
 .\obj\main.o: ..\include\i2c.h
+.\obj\main.o: ..\include\adc.h

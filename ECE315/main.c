@@ -58,7 +58,8 @@ int
 main(void)
 {
 
-  
+  int displaycount = 0; 
+  int analogvalue = 0;
   initializeBoard();
 
   uartTxPoll(UART0_BASE, "\n\r");
@@ -72,8 +73,7 @@ main(void)
 			 
 	
   SysTick_Config(2500);
-	int displaycount = 0; 
-  int analogvalue = 0;
+
 
   while(1)
   {
@@ -83,8 +83,8 @@ main(void)
 			displaycount++;
 		}
 		if(displaycount == 100) {
-			uartTxPoll(UART0_BASE, "Analog Value:\n");
-			uartTxPoll(UART0_BASE, analogvalue);
+			//uartTxPoll(UART0_BASE, "Analog Value:\n");
+			//uartTxPoll(UART0_BASE, analogvalue);
 		}
 	}
   }
