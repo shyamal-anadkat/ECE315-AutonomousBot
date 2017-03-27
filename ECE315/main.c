@@ -79,7 +79,7 @@ int analogvalue = 0;
   {
 		if(measureAnalog){
 			analogvalue = getADCValue(ADC0_BASE,0 );
-			isdone = false; 
+			measureAnalog = false; 
 			displaycount++;
 		}
 		if(displaycount == 100) {
