@@ -46,6 +46,7 @@ void initializeBoard(void)
 {
   DisableInterrupts();
   serialDebugInit();
+  SysTick_Config(2500);
   EnableInterrupts();
 }
 
@@ -60,6 +61,7 @@ int main(void)
   int displaycount = 0; 
   int analogvalue = 0;
   int digitalvalue = 0;
+  char a, b, c;
 
   initializeBoard();
 
@@ -67,12 +69,8 @@ int main(void)
   uartTxPoll(UART0_BASE,"**************************************\n\r");
   uartTxPoll(UART0_BASE,"* ECE315 Default Project\n\r");
   uartTxPoll(UART0_BASE,"**************************************\n\r");
+  			 
   
-  // Infinite Loop
-  while(1)
-  {
-			 
-  SysTick_Config(2500);
   while(1)
   {
 	  	if(measureDigital){
@@ -84,11 +82,21 @@ int main(void)
 			measureAnalog = false; 
 			displaycount = (displaycount + 1) % 100;
 		}
+	  	
+	  	if(uartRxPoll(UART0_BASE, true) == 'R') {
+			a = uartRxPoll(UART0_BASE, true);
+			b = uartRxPoll(UART0_BASE, true);
+			c = uartRxPoll(UART0_BASE, true);
+			
+		}
+	  
 		if(displaycount == 99) {
-			uartTxPoll(UART0_BASE, "Digital Value:\n");
+			uartTxPoll(UART0_BASE, "Right (Digital):\n");
 			uartTxPoll(UART0_BASE, digitalvalue);
-			uartTxPoll(UART0_BASE, "Analog Value:\n");
+			uartTxPoll(UART0_BASE, "Middle (Analog):\n");
 			uartTxPoll(UART0_BASE, analogvalue);
+			uartTxPoll(UART0_BASE, "Left (Polling):\n");
+			uartTxPoll(UART0_BASE, strcat(strcat(c, b), a)); 
 		}
 	}
   }
