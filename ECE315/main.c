@@ -53,7 +53,7 @@ void initializeBoard(void)
 //*****************************************************************************
 //*****************************************************************************
 
-extern bool isdone;
+extern bool measureAnalog;
 int 
 main(void)
 {
@@ -77,7 +77,7 @@ int analogvalue = 0;
   SysTick_Config(2500);
   while(1)
   {
-		if(isdone == true){
+		if(measureAnalog){
 			analogvalue = getADCValue(ADC0_BASE,0 );
 			isdone = false; 
 			displaycount++;
