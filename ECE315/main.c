@@ -84,19 +84,19 @@ int main(void)
 		}
 	  	
 	  	if(uartRxPoll(UART0_BASE, true) == 'R') {
-			a = uartRxPoll(UART0_BASE, true);
-			b = uartRxPoll(UART0_BASE, true);
-			c = uartRxPoll(UART0_BASE, true);
+			a = uartRxPoll(UART7_BASE, true);
+			b = uartRxPoll(UART7_BASE, true);
+			c = uartRxPoll(UART7_BASE, true);
 			
 		}
 	  
 		if(displaycount == 99) {
-			uartTxPoll(UART0_BASE, "Right (Digital):\n");
-			uartTxPoll(UART0_BASE, digitalvalue);
-			uartTxPoll(UART0_BASE, "Middle (Analog):\n");
-			uartTxPoll(UART0_BASE, analogvalue);
-			uartTxPoll(UART0_BASE, "Left (Polling):\n");
-			uartTxPoll(UART0_BASE, strcat(strcat(c, b), a)); 
+			uartTxPoll(UART7_BASE, "Right (Digital):\n");
+			uartTxPoll(UART7_BASE, digitalvalue);
+			uartTxPoll(UART7_BASE, "Middle (Analog):\n");
+			uartTxPoll(UART7_BASE, analogvalue);
+			uartTxPoll(UART7_BASE, "Left (Polling):\n");
+			uartTxPoll(UART7_BASE, strcat(strcat(c, b), a)); 
 		}
 	}
   }
