@@ -1,17 +1,17 @@
 #include "interrupts.h"
 #include "adc.h"
 
-volatile bool isdone; 
+volatile bool measureAnalog; 
 
 int SysTick_Handler(void) {
-static int count = 0; 
+	static int count = 0; 
 	int anval;
 	
-	if(count == 200) {
+	if(count == 199) {
 		count = 0;
-		isdone = true;
+		measureAnalog = true;
 	} 
-	count++; 
+	count = (count + 1) % 200; 
 	
 	return count; 
 }
