@@ -47,6 +47,7 @@ void initializeBoard(void)
   DisableInterrupts();
   serialDebugInit();
   SysTick_Config(2500);
+  sonar_config_gpio();
   EnableInterrupts();
 }
 
