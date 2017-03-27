@@ -76,7 +76,7 @@ int main(void)
   while(1)
   {
 	  	if(measureDigital){
-			// digitalvalue = getADCValue(ADC0_BASE, 0);
+			digitalvalue = (UART7->PE2)*(147*10^-6);	// 147uS per inch
 			measureDigital = false;
 		}
 		if(measureAnalog){
@@ -85,8 +85,10 @@ int main(void)
 			displaycount = (displaycount + 1) % 100;
 		}
 		if(displaycount == 99) {
-			//uartTxPoll(UART0_BASE, "Analog Value:\n");
-			//uartTxPoll(UART0_BASE, analogvalue);
+			uartTxPoll(UART0_BASE, "Digital Value:\n");
+			uartTxPoll(UART0_BASE, digitalvalue);
+			uartTxPoll(UART0_BASE, "Analog Value:\n");
+			uartTxPoll(UART0_BASE, analogvalue);
 		}
 	}
   }
