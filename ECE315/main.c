@@ -54,14 +54,13 @@ void initializeBoard(void)
 //*****************************************************************************
 
 extern bool measureAnalog;
-int 
-main(void)
+extern bool measureDigital;
+int main(void)
 {
-int displaycount = 0; 
-int analogvalue = 0;
-
   int displaycount = 0; 
   int analogvalue = 0;
+  int digitalvalue = 0;
+
   initializeBoard();
 
   uartTxPoll(UART0_BASE, "\n\r");
@@ -73,16 +72,19 @@ int analogvalue = 0;
   while(1)
   {
 			 
-	
   SysTick_Config(2500);
   while(1)
   {
+	  	if(measureDigital){
+			// digitalvalue = getADCValue(ADC0_BASE, 0);
+			measureDigital = false;
+		}
 		if(measureAnalog){
 			analogvalue = getADCValue(ADC0_BASE,0 );
 			measureAnalog = false; 
-			displaycount++;
+			displaycount = (displaycount + 1) % 100;
 		}
-		if(displaycount == 100) {
+		if(displaycount == 99) {
 			//uartTxPoll(UART0_BASE, "Analog Value:\n");
 			//uartTxPoll(UART0_BASE, analogvalue);
 		}
