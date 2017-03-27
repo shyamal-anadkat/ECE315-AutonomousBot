@@ -54,55 +54,44 @@ void uart0_config_gpio(void)
 //************************************************************************
 // Configure a UART to be 9600, 8N1.  
 //************************************************************************
-bool uart_init_lab1(uint32_t uart_base, bool enable_rx_irq, bool enable_tx_irq) {
-	
-    UART0_Type *uart = (UART0_Type *)(uart_base);
-	  uint32_t rcgc_mask;
+void uart_init9600_8N1(void)
+{
+    UART0_Type *uart = (UART0_Type *)(UART7_BASE);
+    uint32_t rcgc_mask;
     uint32_t pr_mask;
+    rcgc_mask = SYSCTL_RCGCUART_UART7;
+    pr_mask = SYSCTL_PRUART_R7;
     
-    if (verify_uart_base(uart_base) == false)
-    {
-      return false;
-    }
-		rcgc_mask = uart_get_rcgc_mask(uart_base);
-    pr_mask = uart_get_pr_mask(uart_base);
-		
-		// Turn the clock on using the rcgc_mask
-	  SYSCTL->RCGCUART|= rcgc_mask; 
-
-    // Wait for the PRUART to indicate the port is ready
-		while( (SYSCTL->PRUART  & pr_mask) == 0) 
-		{}	
-			
-		//Disable the UART (CTL)
-    uart->CTL &= ~UART_CTL_UARTEN;
-			
-		//set the baud rate to be 9600.
+    SYSCTL->RCGCUART = rcgc_mask;
+		while(!(SYSCTL->PRUART & pr_mask));
+		uart->CTL &= ~UART_CTL_UARTEN;
 		uart->IBRD = 325;
-		uart->FBRD = 33; 
-			
-		uart->LCRH |= UART_LCRH_FEN;    //enable FIFO
-		uart->LCRH |= UART_LCRH_WLEN_8;
-		
-	  //enable uart stuff 
-		uart->CTL = (UART_CTL_RXE|UART_CTL_TXE|UART_CTL_UARTEN);
-	
+		uart->FBRD = 33;
+		uart->LCRH = (UART_LCRH_WLEN_8|UART_LCRH_FEN);
+		uart->CTL = UART_CTL_RXE|UART_CTL_TXE|UART_CTL_UARTEN;
 }
 
+//configure sensor GPIOs
 void sonar_config_gpio(void)
 {
-	//J7
+	//J7, J8, J11//
+	
 	gpio_enable_port(GPIOE_BASE);
-  gpio_config_digital_enable( GPIOE_BASE, PE2);
+	gpio_enable_port(GPIOB_BASE);
+  
+	gpio_config_digital_enable( GPIOE_BASE, PE0 | PE1 | PE2);
+	gpio_config_digital_enable( GPIOB_BASE, PB0);
 	
-	//J11
-	initializeADC(ADC0_BASE);
-	gpio_config_analog_enable(GPIOE_BASE, PE3);
+	gpio_config_enable_input(GPIOE_BASE,PE3);
+	gpio_config_enable_input(GPIOE_BASE,PE2);
+	gpio_config_enable_output(GPIOB_BASE,PB0);
 	
-	//J8
-	gpio_config_digital_enable( GPIOE_BASE, PE0 | PE1);
 	gpio_config_alternate_function( GPIOE_BASE, PE0 | PE1);
-	//gpio_config_port_control( GPIOE_BASE, GPIO_PCTL_PE0_U0RX | GPIO_PCTL_PE1_U0TX);
+	gpio_config_analog_enable(GPIOE_BASE, PE3);
+	gpio_config_port_control( GPIOE_BASE, GPIO_PCTL_PE0_U7RX | GPIO_PCTL_PE1_U7TX);
+	
+	initializeADC(ADC0_BASE);
+	uart_init9600_8N1();
 	
 }
 
@@ -119,19 +108,11 @@ void serialDebugInit(void)
   );
 }
 
-void sonarInit(void){
-	
-	// Configure GPIO Pins
-	sonar_config_gpio();
-	
-}
-
 
 
 /****************************************************************************
  * HELPER FUNCTIONS
  ****************************************************************************/
-
 
 /****************************************************************************
  * Verify that the uart base address is valid
