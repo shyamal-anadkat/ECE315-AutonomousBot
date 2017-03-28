@@ -78,8 +78,15 @@ int main(void)
   while(1)
   {
 	  	if(measureDigital){
-			digitalvalue = (PE2/(147*pow(10,-6)));	// 147uS per inch
-			measureDigital = false;
+				if(GPIOE->DATA != 0) {
+					counthigh++;
+				}
+				else if (counthigh != 0 && GPIOE->DATA == 0) {
+					digitalvalue = (counthigh*50)/(147);
+				}
+				else { 
+					counthigh = 0; 
+				}
 		}
 		if(measureAnalog){
 			analogvalue = getADCValue(ADC0_BASE,0) / 7;
