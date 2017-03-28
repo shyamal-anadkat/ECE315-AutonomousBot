@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
+#include <math.h>
 
 
 #include "TM4C123.h"
@@ -45,9 +46,9 @@
 void initializeBoard(void)
 {
   DisableInterrupts();
-  serialDebugInit();
   SysTick_Config(2500);
   sonar_config_gpio();
+	serialDebugInit();
   EnableInterrupts();
 }
 
@@ -63,6 +64,8 @@ int main(void)
   int analogvalue = 0;
   int digitalvalue = 0;
   char a, b, c;
+	char left[3];
+	char out[15];
 
   initializeBoard();
 
@@ -75,31 +78,38 @@ int main(void)
   while(1)
   {
 	  	if(measureDigital){
-			digitalvalue = (UART7->PE2)*(147*10^-6);	// 147uS per inch
+			digitalvalue = (PE2/(147*pow(10,-6)));	// 147uS per inch
 			measureDigital = false;
 		}
 		if(measureAnalog){
-			analogvalue = getADCValue(ADC0_BASE,0 );
+			analogvalue = getADCValue(ADC0_BASE,0) / 7;
 			measureAnalog = false; 
 			displaycount = (displaycount + 1) % 100;
 		}
 	  	
-	  	if(uartRxPoll(UART7_BASE, true) == 'R') {
+	  if(uartRxPoll(UART7_BASE, true) == 'R') {
 			a = uartRxPoll(UART7_BASE, true);
 			b = uartRxPoll(UART7_BASE, true);
 			c = uartRxPoll(UART7_BASE, true);
-			
+			left[2] = c;
+			left[1] = b;
+			left[0] = a;
 		}
 	  
+		
+		
 		if(displaycount == 99) {
-			uartTxPoll(UART0_BASE, "Right (Digital):\n");
-			uartTxPoll(UART0_BASE, digitalvalue);
-			uartTxPoll(UART0_BASE, "Middle (Analog):\n");
-			uartTxPoll(UART0_BASE, analogvalue);
-			uartTxPoll(UART0_BASE, "Left (Polling):\n");
-			uartTxPoll(UART0_BASE, strcat(strcat(c, b), a)); 
+			uartTxPoll(UART0_BASE, "\n\rRight (Digital):\n\r");
+			sprintf(out, "%d", digitalvalue);
+			uartTxPoll(UART0_BASE, out);
+			uartTxPoll(UART0_BASE, "\n\rMiddle (Analog):\n\r");
+			sprintf(out, "%d", analogvalue);
+			uartTxPoll(UART0_BASE,  out);
+			uartTxPoll(UART0_BASE, "\n\rLeft (Polling):\n\r");
+			uartTxPoll(UART0_BASE,  left);
+			
 		}
 	}
-  }
+  
 }
 
