@@ -10,7 +10,11 @@
 //*****************************************************************************
 void  drv8833_gpioInit(void)
 {
+  // Configure PB4, PB5, PE4, PE5 as the PWM peripheral in the alternate function register
   
+  // Configure PF2 as a digital input
+  
+  // Configure PF3 as a digital output and set it to 1
 }
 
 //*****************************************************************************
