@@ -12,7 +12,7 @@
 #include "gpioPort.h"
 //#include "pc_buffer.h"
 #include "i2c.h"
-
+#include "drv8833.h"
 
 #define NULL                0
 #define UNUSED              0

@@ -31,7 +31,7 @@
 
 #include "TM4C123.h"
 #include "boardUtil.h"
-
+#include "drv8833.h"
 
 
 //*****************************************************************************
@@ -45,6 +45,7 @@ void initializeBoard(void)
 {
   DisableInterrupts();
   serialDebugInit();
+	drv8833_gpioInit();
   EnableInterrupts();
 }
 
@@ -63,9 +64,9 @@ main(void)
   uartTxPoll(UART0_BASE,"* ECE315 Default Project\n\r");
   uartTxPoll(UART0_BASE,"**************************************\n\r");
   
+	drv8833_leftForward(100);
   // Infinite Loop
   while(1)
   {
-
   }
 }

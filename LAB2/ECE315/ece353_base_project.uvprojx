@@ -414,6 +414,16 @@
               <FileType>1</FileType>
               <FilePath>.\boardUtil.c</FilePath>
             </File>
+            <File>
+              <FileName>drv8833.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\drv8833.c</FilePath>
+            </File>
+            <File>
+              <FileName>pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\pwm.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

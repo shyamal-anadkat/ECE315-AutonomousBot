@@ -17,3 +17,6 @@
 .\obj\boardutil.o: ..\include\gpioPort.h
 .\obj\boardutil.o: C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\TM4C123.h
 .\obj\boardutil.o: ..\include\i2c.h
+.\obj\boardutil.o: drv8833.h
+.\obj\boardutil.o: boardUtil.h
+.\obj\boardutil.o: pwm.h

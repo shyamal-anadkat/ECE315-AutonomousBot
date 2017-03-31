@@ -65,4 +65,5 @@ void serialDebugInit(void)
     SYSCTL_RCGCUART_R0, 
     SYSCTL_PRUART_R0
   );
+	
 }
