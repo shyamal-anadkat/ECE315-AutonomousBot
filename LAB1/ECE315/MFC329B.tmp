@@ -1,0 +1,45 @@
+#include "interrupts.h"
+extern volatile bool AlertSysTick; // Every 50us
+extern volatile bool AlertRoutine; // Every 10ms
+extern volatile bool AlertPrint;   // Every 1s
+extern volatile bool edgeChange;
+extern volatile char buffer[4];
+
+void SysTick_Handler(void){
+	static uint32_t routine = 0;
+	static uint32_t print = 0;
+	uint32_t val;
+	
+	AlertSysTick = true;
+	routine++;
+	print++;
+	if(routine >= 200){
+		AlertRoutine = true;
+		routine = 0;
+	}
+	if(print >= 20000){
+		AlertPrint = true;
+		print = 0;
+	}
+	
+	val = SysTick->VAL;
+}
+
+void UART7_Handler(void){
+	uint32_t i;
+
+	//uartTxPoll(UART0_BASE, "UART7_Handler Reached\n\r");
+	if(UART7->DR == 'R'){
+		for(i = 0; i < 3; i++){
+			buffer[i] = UART7->DR;
+		}
+	}
+	buffer[3] = NULL;
+	
+}
+
+void GPIOE_Handler(void){
+	
+	edgeChange = true;
+	//uartTxPoll(UART0_BASE, "GPIOE_Handler\n\r");
+}
