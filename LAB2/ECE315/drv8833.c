@@ -101,3 +101,9 @@ void  drv8833_turnRight(uint8_t dutyCycle)
 	drv8833_leftForward(dutyCycle);
 	drv8833_rightReverse(dutyCycle);
 }
+
+void	drv8833_halt()
+{
+  pwmConfig(PWM0_BASE, 1, PWM_LOAD_VAL, 0, 0, PWM_CHANNEL_LOW, PWM_CHANNEL_LOW);
+  pwmConfig(PWM1_BASE, 1 , PWM_LOAD_VAL, 0, 0, PWM_CHANNEL_LOW,PWM_CHANNEL_LOW);
+}

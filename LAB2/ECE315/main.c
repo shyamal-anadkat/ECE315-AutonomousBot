@@ -38,7 +38,8 @@
 // Global Variables
 //*****************************************************************************
 
-volatile bool alert1s;
+volatile bool Alert1s;
+
 uint8_t medium_speed = 0x7F;
 uint8_t off = 0x00;
   
@@ -50,8 +51,8 @@ void initializeBoard(void)
   serialDebugInit();
 	drv8833_gpioInit();
   EnableInterrupts();
-	// Every 1s assuming 50MHz clk
-	SysTick_Config(50000000);
+	// Every 100ms assuming 50MHz clk
+	SysTick_Config(5000000);
 }
 
 
@@ -69,42 +70,54 @@ main(void)
   uartTxPoll(UART0_BASE,"* ECE315 Default Project\n\r");
   uartTxPoll(UART0_BASE,"**************************************\n\r");
   
-	
-
-	
 	// Forward 2 seconds,
 	drv8833_leftForward(medium_speed);
 	drv8833_rightForward(medium_speed);
-	while(!alert1s){}	// wait 1s
-	while(!alert1s){} // wait 1s
+	while(!Alert1s){}	// wait 1s
+	Alert1s = false;
+	while(!Alert1s){} 	// wait 1s
+	Alert1s = false;
 	drv8833_leftForward(off);
 	drv8833_rightForward(off);
 		
 	// backward 2 seconds
 	drv8833_leftReverse(medium_speed);
 	drv8833_rightReverse(medium_speed);
-	while(!alert1s){}	// wait 1s
-	while(!alert1s){} // wait 1s
+	while(!Alert1s){}	// wait 1s
+	Alert1s = false;
+	while(!Alert1s){} 	// wait 1s
+	Alert1s = false;
 	drv8833_leftReverse(off);
 	drv8833_rightReverse(off);
 		
 	// left 5 seconds
 	drv8833_turnLeft(medium_speed);
-  while(!alert1s){}	// wait 1s
-	while(!alert1s){} // wait 1s
-	while(!alert1s){}	// wait 1s
-	while(!alert1s){} // wait 1s
-	while(!alert1s){}	// wait 1s
+  	while(!Alert1s){}	// wait 1s
+	Alert1s = false;
+	while(!Alert1s){} 	// wait 1s
+	Alert1s = false;
+	while(!Alert1s){}	// wait 1s
+	Alert1s = false;
+	while(!Alert1s){} 	// wait 1s
+	Alert1s = false;
+	while(!Alert1s){}	// wait 1s
+	Alert1s = false;
 	drv8833_turnLeft(off);
 		
 	// right 5 seconds
 	drv8833_turnRight(medium_speed);
-  while(!alert1s){}	// wait 1s
-	while(!alert1s){} // wait 1s
-	while(!alert1s){}	// wait 1s
-	while(!alert1s){} // wait 1s
-	while(!alert1s){}	// wait 1s
+ 	while(!Alert1s){}	// wait 1s
+	Alert1s = false;
+	while(!Alert1s){} 	// wait 1s
+	Alert1s = false;
+	while(!Alert1s){}	// wait 1s
+	Alert1s = false;
+	while(!Alert1s){}	// wait 1s
+	Alert1s = false;
+	while(!Alert1s){}	// wait 1s
+	Alert1s = false;
 	drv8833_turnRight(off);
+	drv8833_halt();
   // Infinite Loop
   while(1)
   {
