@@ -1,8 +1,9 @@
---cpu Cortex-M4.fp
+--cpu=Cortex-M4.fp
 ".\obj\main.o"
 ".\obj\boardutil.o"
 ".\obj\drv8833.o"
 ".\obj\pwm.o"
+".\obj\interrupts.o"
 "..\lib\ece315.lib"
 ".\obj\startup_tm4c123.o"
 ".\obj\system_tm4c123.o"

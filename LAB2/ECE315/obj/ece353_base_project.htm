@@ -3,11 +3,11 @@
 <title>Static Call Graph - [.\obj\ece353_base_project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\obj\ece353_base_project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5040049: Last Updated: Thu Mar 30 23:06:01 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Sat Apr 01 15:25:40 2017
 <BR><P>
-<H3>Maximum Stack Usage =         44 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =         52 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-main &rArr; drv8833_leftForward &rArr; pwmConfig
+main &rArr; drv8833_turnRight &rArr; drv8833_rightReverse &rArr; pwmConfig
 <P>
 <H3>
 Mutually Recursive functions
@@ -19,7 +19,6 @@ Mutually Recursive functions
  <LI><a href="#[6]">SVC_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[6]">SVC_Handler</a><BR>
  <LI><a href="#[7]">DebugMon_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[7]">DebugMon_Handler</a><BR>
  <LI><a href="#[8]">PendSV_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[8]">PendSV_Handler</a><BR>
- <LI><a href="#[9]">SysTick_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[9]">SysTick_Handler</a><BR>
  <LI><a href="#[a]">GPIOA_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[a]">GPIOA_Handler</a><BR>
  <LI><a href="#[b]">GPIOB_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[b]">GPIOB_Handler</a><BR>
  <LI><a href="#[c]">GPIOC_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[c]">GPIOC_Handler</a><BR>
@@ -213,7 +212,7 @@ Function Pointers
  <LI><a href="#[41]">SSI3_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
  <LI><a href="#[6]">SVC_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
  <LI><a href="#[26]">SYSCTL_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
- <LI><a href="#[9]">SysTick_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
+ <LI><a href="#[9]">SysTick_Handler</a> from interrupts.o(.text) referenced from startup_tm4c123.o(RESET)
  <LI><a href="#[77]">SystemInit</a> from system_tm4c123.o(.text) referenced from startup_tm4c123.o(.text)
  <LI><a href="#[1d]">TIMER0A_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
  <LI><a href="#[1e]">TIMER0B_Handler</a> from startup_tm4c123.o(.text) referenced from startup_tm4c123.o(RESET)
@@ -282,8 +281,8 @@ Global Symbols
 
 <P><STRONG><a name="[a0]"></a>__rt_final_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$0000000F))
 
-<P><STRONG><a name="[7c]"></a>initializeBoard</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = initializeBoard &rArr; serialDebugInit &rArr; uart0_config_gpio &rArr; gpio_config_port_control
+<P><STRONG><a name="[7c]"></a>initializeBoard</STRONG> (Thumb, 88 bytes, Stack size 16 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = initializeBoard &rArr; serialDebugInit &rArr; uart0_config_gpio &rArr; gpio_config_port_control
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;serialDebugInit
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_gpioInit
@@ -293,10 +292,15 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[76]"></a>main</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = main &rArr; drv8833_leftForward &rArr; pwmConfig
+<P><STRONG><a name="[76]"></a>main</STRONG> (Thumb, 276 bytes, Stack size 0 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = main &rArr; drv8833_turnRight &rArr; drv8833_rightReverse &rArr; pwmConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uartTxPoll
+<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_turnRight
+<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_turnLeft
+<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_rightReverse
+<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_rightForward
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_leftReverse
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_leftForward
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initializeBoard
 </UL>
@@ -310,13 +314,13 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initializeBoard
 </UL>
 
-<P><STRONG><a name="[83]"></a>uart0_config_gpio</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, boardutil.o(.text))
+<P><STRONG><a name="[88]"></a>uart0_config_gpio</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, boardutil.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = uart0_config_gpio &rArr; gpio_config_port_control
 </UL>
-<BR>[Calls]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_enable_port
-<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_port_control
-<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_digital_enable
-<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_alternate_function
+<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_enable_port
+<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_port_control
+<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_digital_enable
+<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_alternate_function
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;serialDebugInit
 </UL>
@@ -324,8 +328,8 @@ Global Symbols
 <P><STRONG><a name="[7e]"></a>serialDebugInit</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, boardutil.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = serialDebugInit &rArr; uart0_config_gpio &rArr; gpio_config_port_control
 </UL>
-<BR>[Calls]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init_115K
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart0_config_gpio
+<BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init_115K
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart0_config_gpio
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initializeBoard
 </UL>
@@ -333,12 +337,12 @@ Global Symbols
 <P><STRONG><a name="[7f]"></a>drv8833_gpioInit</STRONG> (Thumb, 140 bytes, Stack size 8 bytes, drv8833.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = drv8833_gpioInit &rArr; gpio_config_enable_output
 </UL>
-<BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_enable_output
-<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_enable_input
-<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_enable_port
-<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_port_control
-<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_digital_enable
-<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_alternate_function
+<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_enable_output
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_enable_input
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_enable_port
+<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_port_control
+<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_digital_enable
+<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_alternate_function
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initializeBoard
 </UL>
@@ -346,49 +350,69 @@ Global Symbols
 <P><STRONG><a name="[82]"></a>drv8833_leftForward</STRONG> (Thumb, 48 bytes, Stack size 24 bytes, drv8833.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = drv8833_leftForward &rArr; pwmConfig
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwmConfig
+<BR>[Calls]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwmConfig
 </UL>
-<BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_turnRight
+<BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_turnRight
 <LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[8c]"></a>drv8833_leftReverse</STRONG> (Thumb, 48 bytes, Stack size 24 bytes, drv8833.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwmConfig
+<P><STRONG><a name="[84]"></a>drv8833_leftReverse</STRONG> (Thumb, 48 bytes, Stack size 24 bytes, drv8833.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = drv8833_leftReverse &rArr; pwmConfig
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_turnLeft
+<BR>[Calls]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwmConfig
 </UL>
-
-<P><STRONG><a name="[8d]"></a>drv8833_rightForward</STRONG> (Thumb, 48 bytes, Stack size 24 bytes, drv8833.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwmConfig
-</UL>
-<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_turnLeft
+<BR>[Called By]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_turnLeft
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[8e]"></a>drv8833_rightReverse</STRONG> (Thumb, 48 bytes, Stack size 24 bytes, drv8833.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwmConfig
+<P><STRONG><a name="[83]"></a>drv8833_rightForward</STRONG> (Thumb, 48 bytes, Stack size 24 bytes, drv8833.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = drv8833_rightForward &rArr; pwmConfig
 </UL>
-<BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_turnRight
+<BR>[Calls]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwmConfig
 </UL>
-
-<P><STRONG><a name="[8f]"></a>drv8833_turnLeft</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, drv8833.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_rightForward
-<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_leftReverse
+<BR>[Called By]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_turnLeft
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[90]"></a>drv8833_turnRight</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, drv8833.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_rightReverse
+<P><STRONG><a name="[85]"></a>drv8833_rightReverse</STRONG> (Thumb, 48 bytes, Stack size 24 bytes, drv8833.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = drv8833_rightReverse &rArr; pwmConfig
+</UL>
+<BR>[Calls]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwmConfig
+</UL>
+<BR>[Called By]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_turnRight
+<LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[86]"></a>drv8833_turnLeft</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, drv8833.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = drv8833_turnLeft &rArr; drv8833_rightForward &rArr; pwmConfig
+</UL>
+<BR>[Calls]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_rightForward
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_leftReverse
+</UL>
+<BR>[Called By]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[87]"></a>drv8833_turnRight</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, drv8833.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = drv8833_turnRight &rArr; drv8833_rightReverse &rArr; pwmConfig
+</UL>
+<BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_rightReverse
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_leftForward
 </UL>
+<BR>[Called By]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
 
-<P><STRONG><a name="[8b]"></a>pwmConfig</STRONG> (Thumb, 428 bytes, Stack size 20 bytes, pwm.o(.text))
+<P><STRONG><a name="[90]"></a>pwmConfig</STRONG> (Thumb, 428 bytes, Stack size 20 bytes, pwm.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = pwmConfig
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_rightReverse
-<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_rightForward
-<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_leftReverse
+<BR>[Called By]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_rightReverse
+<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_rightForward
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_leftReverse
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_leftForward
 </UL>
 
+<P><STRONG><a name="[9]"></a>SysTick_Handler</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, interrupts.o(.text))
+<BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
+</UL>
 <P><STRONG><a name="[79]"></a>Reset_Handler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, startup_tm4c123.o(.text))
 
 <P><STRONG><a name="[1]"></a>NMI_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, startup_tm4c123.o(.text))
@@ -444,13 +468,6 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PendSV_Handler
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PendSV_Handler
-</UL>
-<BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
-</UL>
-<P><STRONG><a name="[9]"></a>SysTick_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, startup_tm4c123.o(.text))
-<BR><BR>[Calls]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
-</UL>
-<BR>[Called By]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(RESET)
 </UL>
@@ -1217,23 +1234,23 @@ Global Symbols
 <P><STRONG><a name="[77]"></a>SystemInit</STRONG> (Thumb, 112 bytes, Stack size 0 bytes, system_tm4c123.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c123.o(.text)
 </UL>
-<P><STRONG><a name="[84]"></a>gpio_enable_port</STRONG> (Thumb, 156 bytes, Stack size 8 bytes, gpioport.o(.text))
+<P><STRONG><a name="[89]"></a>gpio_enable_port</STRONG> (Thumb, 156 bytes, Stack size 8 bytes, gpioport.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = gpio_enable_port
 </UL>
-<BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart0_config_gpio
+<BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart0_config_gpio
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_gpioInit
 </UL>
 
-<P><STRONG><a name="[85]"></a>gpio_config_digital_enable</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, gpioport.o(.text))
+<P><STRONG><a name="[8a]"></a>gpio_config_digital_enable</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, gpioport.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = gpio_config_digital_enable
 </UL>
 <BR>[Calls]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyBaseAddr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart0_config_gpio
+<BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart0_config_gpio
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_gpioInit
 </UL>
 
-<P><STRONG><a name="[89]"></a>gpio_config_enable_output</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, gpioport.o(.text))
+<P><STRONG><a name="[8e]"></a>gpio_config_enable_output</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, gpioport.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = gpio_config_enable_output
 </UL>
 <BR>[Calls]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyBaseAddr
@@ -1241,7 +1258,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_gpioInit
 </UL>
 
-<P><STRONG><a name="[8a]"></a>gpio_config_enable_input</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, gpioport.o(.text))
+<P><STRONG><a name="[8f]"></a>gpio_config_enable_input</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, gpioport.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = gpio_config_enable_input
 </UL>
 <BR>[Calls]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyBaseAddr
@@ -1261,21 +1278,21 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyBaseAddr
 </UL>
 
-<P><STRONG><a name="[86]"></a>gpio_config_alternate_function</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, gpioport.o(.text))
+<P><STRONG><a name="[8b]"></a>gpio_config_alternate_function</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, gpioport.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = gpio_config_alternate_function
 </UL>
 <BR>[Calls]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyBaseAddr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart0_config_gpio
+<BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart0_config_gpio
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_gpioInit
 </UL>
 
-<P><STRONG><a name="[87]"></a>gpio_config_port_control</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, gpioport.o(.text))
+<P><STRONG><a name="[8c]"></a>gpio_config_port_control</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, gpioport.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = gpio_config_port_control
 </UL>
 <BR>[Calls]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyBaseAddr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart0_config_gpio
+<BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart0_config_gpio
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drv8833_gpioInit
 </UL>
 
@@ -1285,7 +1302,7 @@ Global Symbols
 
 <P><STRONG><a name="[98]"></a>verifyUartBase</STRONG> (Thumb, 54 bytes, Stack size 0 bytes, uart.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uartRxPoll
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init_115K
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init_115K
 <LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uartTxPoll
 </UL>
 
@@ -1301,7 +1318,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyUartBase
 </UL>
 
-<P><STRONG><a name="[88]"></a>uart_init_115K</STRONG> (Thumb, 78 bytes, Stack size 16 bytes, uart.o(.text))
+<P><STRONG><a name="[8d]"></a>uart_init_115K</STRONG> (Thumb, 78 bytes, Stack size 16 bytes, uart.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = uart_init_115K
 </UL>
 <BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;verifyUartBase
@@ -1335,11 +1352,11 @@ Local Symbols
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_analog_enable
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_enable_pulldown
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_enable_pullup
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_enable_output
-<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_enable_input
-<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_port_control
-<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_digital_enable
-<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_alternate_function
+<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_enable_output
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_enable_input
+<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_port_control
+<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_digital_enable
+<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_config_alternate_function
 </UL>
 <P>
 <H3>
