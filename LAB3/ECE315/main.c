@@ -31,15 +31,18 @@
 
 #include "TM4C123.h"
 #include "boardUtil.h"
-#include "ece252_lab3.h"
+#include "ece315_lab3.h"
+#include "drv8833.h"
 
 
 
 //*****************************************************************************
 // Global Variables
 //*****************************************************************************
-extern uint32_t left_pulse;
-extern uint32_t right_pulse;
+extern uint32_t leftA_pulse;
+extern uint32_t leftB_pulse;
+extern uint32_t rightA_pulse;
+extern uint32_t rightB_pulse;
   
 //*****************************************************************************
 //*****************************************************************************
@@ -47,8 +50,10 @@ void initializeBoard(void)
 {
   DisableInterrupts();
   serialDebugInit();
-  EnableInterrupts();
+	drv8833_gpioInit();
 	rfInit();
+	encodersInit();
+  EnableInterrupts();
 }
 
 
@@ -60,6 +65,8 @@ main(void)
 	char msg[80];
 	wireless_com_status_t status;
 	uint32_t data;
+	uint8_t char1, char2;
+	uint16_t speed;
   
   initializeBoard();
 
@@ -79,13 +86,15 @@ main(void)
 			memset (msg,0,80);
 			sprintf(msg,"Data RXed: %c%c %d\n\r", data>>24, data >> 16, data & 0xFFFF);
 			uartTxPoll(UART0_BASE, msg);
-			sprintf(msg,"LeftPulse: %i. RightPulse: %i", left_pulse, right_pulse);
+			sprintf(msg,"LA: %i. LB: %i RA: %i RB: %i", leftA_pulse, leftB_pulse, rightA_pulse, rightB_pulse);
 			uartTxPoll(UART0_BASE, msg);
-			uint8_t char1 = (data>>24) & 0xFF;
-			uint8_t char2 = (data>>16) & 0xFF;
-			uint16_t speed = data & 0xFFFF;
 			
-			if(char1=='F' & char2 == 'W')
+			char1 = (data>>24) & 0xFF;
+			char2 = (data>>16) & 0xFF;
+			
+			speed = data & 0xFFFF;
+			
+			if(char1=='F' & char2 == 'W' )
 			{
 				// Forward
 				drv8833_leftForward(speed);
@@ -115,6 +124,7 @@ main(void)
 			else
 			{
 				// Command not recongized
+				drv8833_halt();
 			}
 			
 		}

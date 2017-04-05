@@ -6,7 +6,7 @@
 // Initializes the pins needed to communicate with the LCD and issues the 
 // initialization sequence found in the LCD datasheet via the SPI interface
 //*****************************************************************************
-void ece315_lcdInit(void)
+/*void ece315_lcdInit(void)
 {
   // Configure SPI CLK
   gpioConfigDigitalEnable(LCD_GPIO_BASE, LCD_CLK_PIN);
@@ -40,7 +40,7 @@ void ece315_lcdInit(void)
   // commands in the LCD data sheet to initialize the LCD.  
   
   
-}
+}*/
 
  //****************************************************************************
 // Sets the currently active page

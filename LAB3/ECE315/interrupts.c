@@ -1,15 +1,30 @@
 #include "interrupts.h"
+#include "boardUtil.h"
 
-volatile static uint32_t left_pulse = 0;
-volatile static uint32_t right_pulse = 0;
+volatile uint32_t leftA_pulse = 0;
+volatile uint32_t leftB_pulse = 0;
+volatile uint32_t rightA_pulse = 0;
+volatile uint32_t rightB_pulse = 0;
 
 void GPIOF_Handler(void){
-	left_pulse++;
-	GPIOF->ICR |= 1;
+		if(GPIOF->RIS & PF0){
+			leftA_pulse++;
+			GPIOF->ICR |= PF0;
+		}
+		if(GPIOF->RIS& PF1){
+			leftB_pulse++;
+			GPIOF->ICR |= PF1;
+		}
 }
 
 
 void GPIOC_Handler(void){
-	right_pulse++;
-	GPIOC->ICR |= 1;
+	if(GPIOC->RIS & PC5){
+		rightA_pulse++;
+		GPIOC->ICR |= PC5;
+	}
+	if(GPIOC->RIS & PC6){
+		rightB_pulse++;
+		GPIOC->ICR |= PC6;
+	}
 }

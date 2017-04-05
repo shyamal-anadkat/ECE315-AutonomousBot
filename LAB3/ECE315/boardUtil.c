@@ -75,10 +75,34 @@ void encodersInit(void)
 {
 	gpio_enable_port(GPIOF_BASE);
 	gpio_enable_port(GPIOC_BASE);
-	gpio_configditial_enable(GPIOF_BASE, PF0 | PF1);
-	gpio_config_digital_enable(GPIOF_BASE, PC5 | PC6);
-	GPIOF->IS &= ~0x02;
-	GPIOC->IS &= ~0x02;
-	GPIOF->IBE |= 0x01;
-	GPIOC->IBE |= 0x01;
+	
+	gpio_config_enable_input(GPIOF_BASE, PF0 | PF1);
+	gpio_config_enable_input(GPIOC_BASE, PC5 | PC6);
+	
+	gpio_config_digital_enable(GPIOF_BASE, PF0 | PF1);
+	gpio_config_digital_enable(GPIOC_BASE, PC5 | PC6);
+	
+	GPIOF->IS &= ~(PF0 | PF1);
+	GPIOC->IS &= ~(PC5 | PC6);
+	
+	// clear any outstanding interruprs 
+	GPIOF->ICR |= PF0 | PF1;
+	GPIOC->ICR |= PC5 | PC6;
+	
+	//controlled by IEV
+	GPIOF->IBE &= ~(PF0 | PF1);
+	GPIOC->IBE &= ~(PC5 | PC6);
+	
+	GPIOF->IEV |= PF0 | PF1;
+	GPIOC->IEV |= PC5 | PC6;
+	
+	//enable interrupt masks
+	GPIOF->IM |= PF0 | PF1;
+	GPIOC->IM |= (PC5 | PC6);
+	
+	NVIC_SetPriority(GPIOF_IRQn, 1);
+	NVIC_SetPriority(GPIOC_IRQn, 2);
+	
+	NVIC_EnableIRQ(GPIOF_IRQn);
+	NVIC_EnableIRQ(GPIOC_IRQn);
 }

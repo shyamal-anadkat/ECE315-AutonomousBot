@@ -12,5 +12,6 @@ void  drv8833_rightForward(uint8_t dutyCycle);
 void  drv8833_rightReverse(uint8_t dutyCycle);
 void  drv8833_turnLeft(uint8_t dutyCycle);
 void  drv8833_turnRight(uint8_t dutyCycle);
+void  drv8833_halt(void);
   
 #endif
