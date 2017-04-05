@@ -24,6 +24,8 @@
 #include "boardUtil.h"
 #include "../include/sysctrl.h"
 
+
+
 void DisableInterrupts(void)
 {
   __asm {
@@ -49,7 +51,6 @@ void uart0_config_gpio(void)
    gpio_config_port_control( GPIOA_BASE, GPIO_PCTL_PA0_U0RX | GPIO_PCTL_PA1_U0TX);
 }
 
-
 //*****************************************************************************
 //*****************************************************************************
 void serialDebugInit(void)
@@ -66,56 +67,17 @@ void serialDebugInit(void)
   );
 }
 
-//sensor config for sonar an, pw an tx !!
-void sensor_config() {
-	
-	//for scope measurements 
-	gpio_enable_port(GPIOF_BASE);
-	gpio_config_enable_output(GPIOF_BASE, PF1);
-	gpio_config_digital_enable( GPIOF_BASE, PF1);
-	
-	//SONAR_PW
-	gpio_enable_port(GPIOE_BASE);
-	gpio_config_enable_input(GPIOE_BASE, PE2);
-  gpio_config_digital_enable( GPIOE_BASE, PE2);
-  
-	//SONAR_AN
-	gpio_config_enable_input(GPIOE_BASE, PE3);
-	gpio_config_analog_enable(GPIOE_BASE, PE3);
-  gpio_config_alternate_function( GPIOE_BASE, PE3);
-	
-	//SONAR_TX
-  gpio_config_digital_enable( GPIOE_BASE, PE0 | PE1);
-  gpio_config_alternate_function( GPIOE_BASE, PE0 | PE1);
-  gpio_config_port_control( GPIOE_BASE, GPIO_PCTL_PE0_U7RX | GPIO_PCTL_PE1_U7TX);
-	
-	uart_init_9600(UART7_BASE, SYSCTL_RCGCUART_R7, SYSCTL_PRUART_R7);
-
-	NVIC_EnableIRQ(UART7_IRQn);
-	NVIC_SetPriority(UART7_IRQn, 3);	
-}
-
-
-//************************************************************************
-// Configure UART0 to be 9600, 8N1. 
-//************************************************************************
-void uart_init_9600(
-  uint32_t base_addr, 
-  uint32_t rcgc_mask, 
-  uint32_t pr_mask
-)
+//*****************************************************************************
+// Configure PF0 (LeftA), PF1(LeftB), PC5(RightA), PC6(RightB)
+// sp that they generate interrupts on rising and falling edges
+//*****************************************************************************
+void encodersInit(void)
 {
-    UART0_Type *myUart;
-    myUart = (UART0_Type *)base_addr;
-    SYSCTL->RCGCUART |= rcgc_mask;
-    
-    while( (SYSCTL->PRUART & pr_mask) == 0)
-    {}
-    myUart->IBRD = 325;
-    myUart->FBRD = 33;
-    myUart->CTL &= ~UART_CTL_UARTEN;
-    myUart->LCRH =   UART_LCRH_WLEN_8 | UART_LCRH_FEN;
-    myUart->IFLS = UART_IFLS_RX2_8;  
-		myUart->IM |= UART_IM_RXIM;
-    myUart->CTL =  UART_CTL_RXE | UART_CTL_UARTEN;
+	gpio_enable_port(GPIOF_BASE);
+	gpio_enable_port(GPIOC_BASE);
+	gpio_configditial_enable(GPIOF_BASE, PF0 | PF1);
+	gpio_config_digital_enable(GPIOF_BASE, PC5 | PC6);
+	GPIOF
+	GPIOF->IBE |= 0x01;
+	GPIOC->IBE |= 0x01;
 }
