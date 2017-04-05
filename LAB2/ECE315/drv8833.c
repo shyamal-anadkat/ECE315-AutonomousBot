@@ -22,6 +22,7 @@ void  drv8833_gpioInit(void)
 		gpio_enable_port(GPIOE_BASE);
 		gpio_enable_port(GPIOF_BASE);
 		
+		// digital enable PB4, PB5, PE4, PE5
 		gpio_config_digital_enable(GPIOB_BASE, PB4 | PB5);
 		gpio_config_digital_enable(GPIOE_BASE, PE4 | PE5);
 		gpio_config_enable_output(GPIOB_BASE, PB4 | PB5);
@@ -42,7 +43,6 @@ void  drv8833_gpioInit(void)
 		gpio_config_enable_output(GPIOF_BASE, PF3);
 	
 		GPIOF->DATA |= PF3;
-		SYSCTL->RCGCPWM |= SYSCTL_RCGCPWM_R0 | SYSCTL_RCGCPWM_R1;
   
 }
 
@@ -62,8 +62,8 @@ void  drv8833_leftReverse(uint8_t dutyCycle)
 	  uint32_t val;
 		val = (PWM_LOAD_VAL * (100-dutyCycle))/100;
 	  // PF2 should be a digital input and PF3 must be a digital output. 
-	  //PF3 is connected to the nSLEEP pin.
-	  //You have to set this pin to a ‘1’ to make the motors move
+	  // PF3 is connected to the nSLEEP pin.
+	  // You have to set this pin to a ‘1’ to make the motors move
 		pwmConfig(PWM0_BASE,1,PWM_LOAD_VAL,val,val,PWM_CHANNEL_LOW,PWM_CHANNEL_PWM);
 }
 
@@ -72,7 +72,8 @@ void  drv8833_leftReverse(uint8_t dutyCycle)
 //*****************************************************************************
 void  drv8833_rightForward(uint8_t dutyCycle)
 {
-		uint32_t val;
+		uint32_t val; 
+		// getting cmpa and cmpb from the duty cycle 
 		val = (PWM_LOAD_VAL * (100-dutyCycle))/100;
 		pwmConfig(PWM1_BASE,1,PWM_LOAD_VAL,val,val,PWM_CHANNEL_PWM,PWM_CHANNEL_LOW);
 }
@@ -90,18 +91,21 @@ void  drv8833_rightReverse(uint8_t dutyCycle)
 //*****************************************************************************
 void  drv8833_turnLeft(uint8_t dutyCycle)
 {
-	drv8833_rightForward(dutyCycle);
-	drv8833_leftReverse(dutyCycle);
+	 //just a combo of right forward and left rev
+	 drv8833_rightForward(dutyCycle);
+	 drv8833_leftReverse(dutyCycle);
 }
 
 //*****************************************************************************
 //*****************************************************************************
 void  drv8833_turnRight(uint8_t dutyCycle)
 {
-	drv8833_leftForward(dutyCycle);
-	drv8833_rightReverse(dutyCycle);
+	 //combo of left turn forward and right reverse 
+	 drv8833_leftForward(dutyCycle);
+	 drv8833_rightReverse(dutyCycle);
 }
 
+// Implement halt function to cease left and right motors 
 void	drv8833_halt()
 {
   pwmConfig(PWM0_BASE, 1, PWM_LOAD_VAL, 0, 0, PWM_CHANNEL_LOW, PWM_CHANNEL_LOW);

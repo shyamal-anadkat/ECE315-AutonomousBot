@@ -57,6 +57,8 @@ void initializeBoard(void)
 
 
 //*****************************************************************************
+/* basic program that allows your robot to drive forward for two seconds, drive backwards for 2 seconds, turn
+  left for 5 seconds, and then turn right for 5 seconds. */
 //*****************************************************************************
 int 
 main(void)
@@ -67,13 +69,15 @@ main(void)
 
   uartTxPoll(UART0_BASE, "\n\r");
   uartTxPoll(UART0_BASE,"**************************************\n\r");
-  uartTxPoll(UART0_BASE,"* ECE315 Default Project\n\r");
+  uartTxPoll(UART0_BASE,"* ECE315 Default Project - Jamie, Shyamal, Sneha\n\r");
   uartTxPoll(UART0_BASE,"**************************************\n\r");
   
+	//********DEMO FOR LAB 2 ************//
+	
 	// Forward 2 seconds,
 	drv8833_leftForward(medium_speed);
 	drv8833_rightForward(medium_speed);
-	while(!Alert1s){}	// wait 1s
+	while(!Alert1s){}		// wait 1s
 	Alert1s = false;
 	while(!Alert1s){} 	// wait 1s
 	Alert1s = false;
@@ -96,28 +100,29 @@ main(void)
 	Alert1s = false;
 	while(!Alert1s){} 	// wait 1s
 	Alert1s = false;
-	while(!Alert1s){}	// wait 1s
+	while(!Alert1s){}	 	// wait 1s
 	Alert1s = false;
 	while(!Alert1s){} 	// wait 1s
 	Alert1s = false;
-	while(!Alert1s){}	// wait 1s
+	while(!Alert1s){}		// wait 1s
 	Alert1s = false;
 	drv8833_turnLeft(off);
 		
 	// right 5 seconds
 	drv8833_turnRight(medium_speed);
- 	while(!Alert1s){}	// wait 1s
+ 	while(!Alert1s){}		// wait 1s
 	Alert1s = false;
 	while(!Alert1s){} 	// wait 1s
 	Alert1s = false;
-	while(!Alert1s){}	// wait 1s
+	while(!Alert1s){}		// wait 1s
 	Alert1s = false;
-	while(!Alert1s){}	// wait 1s
+	while(!Alert1s){}		// wait 1s
 	Alert1s = false;
-	while(!Alert1s){}	// wait 1s
+	while(!Alert1s){}		// wait 1s
 	Alert1s = false;
 	drv8833_turnRight(off);
 	drv8833_halt();
+		
   // Infinite Loop
   while(1)
   {
