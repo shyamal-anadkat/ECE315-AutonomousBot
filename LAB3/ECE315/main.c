@@ -38,7 +38,8 @@
 //*****************************************************************************
 // Global Variables
 //*****************************************************************************
-
+extern uint32_t left_pulse;
+extern uint32_t right_pulse;
   
 //*****************************************************************************
 //*****************************************************************************
@@ -77,6 +78,8 @@ main(void)
 		{
 			memset (msg,0,80);
 			sprintf(msg,"Data RXed: %c%c %d\n\r", data>>24, data >> 16, data & 0xFFFF);
+			uartTxPoll(UART0_BASE, msg);
+			sprintf(msg,"LeftPulse: %i. RightPulse: %i", left_pulse, right_pulse);
 			uartTxPoll(UART0_BASE, msg);
 			uint8_t char1 = (data>>24) & 0xFF;
 			uint8_t char2 = (data>>16) & 0xFF;
