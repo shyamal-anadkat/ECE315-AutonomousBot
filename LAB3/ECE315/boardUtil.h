@@ -123,5 +123,6 @@ void serialDebugInit(void);
 void i2cInit(void);
 void DisableInterrupts(void);
 void EnableInterrupts(void);
+void encodersInit(void);
 
 #endif
