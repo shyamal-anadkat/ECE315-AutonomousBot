@@ -31,6 +31,7 @@
 
 #include "TM4C123.h"
 #include "boardUtil.h"
+#include "ece252_lab3.h"
 
 
 
@@ -46,6 +47,7 @@ void initializeBoard(void)
   DisableInterrupts();
   serialDebugInit();
   EnableInterrupts();
+	rfInit();
 }
 
 
@@ -54,7 +56,9 @@ void initializeBoard(void)
 int 
 main(void)
 {
-
+	char msg[80];
+	wireless_com_status_t status;
+	uint32_t data;
   
   initializeBoard();
 
@@ -66,6 +70,50 @@ main(void)
   // Infinite Loop
   while(1)
   {
-
+		// Check to see when wireless data arrives
+		
+		status = wireless_get_32(false, &data);
+		if(status == NRF24L01_RX_SUCCESS)
+		{
+			memset (msg,0,80);
+			sprintf(msg,"Data RXed: %c%c %d\n\r", data>>24, data >> 16, data & 0xFFFF);
+			uartTxPoll(UART0_BASE, msg);
+			uint8_t char1 = (data>>24) & 0xFF;
+			uint8_t char2 = (data>>16) & 0xFF;
+			uint16_t speed = data & 0xFFFF;
+			
+			if(char1=='F' & char2 == 'W')
+			{
+				// Forward
+				drv8833_leftForward(speed);
+				drv8833_rightForward(speed);
+			}
+			else if(char1=='R' & char2 == 'V')
+			{
+				// Reverse
+				drv8833_leftReverse(speed);
+				drv8833_rightReverse(speed);
+			}
+			else if(char1=='R' & char2 == 'T')
+			{
+				// Right
+				drv8833_turnRight(speed);
+			}
+			else if(char1=='L' & char2 == 'F')
+			{
+				// Left
+				drv8833_turnLeft(speed);
+			}
+			else if(char1=='S' & char2 == 'T')
+			{
+				// Stop
+				drv8833_halt();
+			}
+			else
+			{
+				// Command not recongized
+			}
+			
+		}
   }
 }
