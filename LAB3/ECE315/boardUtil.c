@@ -77,8 +77,8 @@ void encodersInit(void)
 	gpio_enable_port(GPIOC_BASE);
 	gpio_configditial_enable(GPIOF_BASE, PF0 | PF1);
 	gpio_config_digital_enable(GPIOF_BASE, PC5 | PC6);
-	GPIOF
+	GPIOF->IS &= ~0x02;
+	GPIOC->IS &= ~0x02;
 	GPIOF->IBE |= 0x01;
 	GPIOC->IBE |= 0x01;
-	
 }
