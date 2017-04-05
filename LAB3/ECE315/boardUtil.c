@@ -66,3 +66,19 @@ void serialDebugInit(void)
     SYSCTL_PRUART_R0
   );
 }
+
+//*****************************************************************************
+// Configure PF0 (LeftA), PF1(LeftB), PC5(RightA), PC6(RightB)
+// sp that they generate interrupts on rising and falling edges
+//*****************************************************************************
+void encodersInit(void)
+{
+	gpio_enable_port(GPIOF_BASE);
+	gpio_enable_port(GPIOC_BASE);
+	gpio_configditial_enable(GPIOF_BASE, PF0 | PF1);
+	gpio_config_digital_enable(GPIOF_BASE, PC5 | PC6);
+	GPIOF
+	GPIOF->IBE |= 0x01;
+	GPIOC->IBE |= 0x01;
+	
+}
