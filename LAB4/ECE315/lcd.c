@@ -104,12 +104,23 @@ void ece315_lcdInit(void)
   gpioCmdPtr->DATA |=  LCD_CD_PIN;
 }
 
- //****************************************************************************
+  //****************************************************************************
 // Sets the currently active page
 //*****************************************************************************
   void ece315_lcdSetPage(uint8_t   page)
   {
-    
+		uint8_t tx_data;
+		uint8_t rx_data;
+		
+		// Set CD to 0
+		GPIOD->DATA &= ~PD7;
+	
+		// Send 1011XXXX, where Xs are page address
+		tx_data = 0xB0 | (0x0F & page);
+    spiTx(LCD_SPI_BASE, &tx_data, 1, &rx_data);
+		
+		// Reset CD to 1
+		GPIOD->DATA |= PD7;
   }
   
 //*****************************************************************************
@@ -117,15 +128,31 @@ void ece315_lcdInit(void)
 //*****************************************************************************
 void ece315_lcdSetColumn(uint8_t   column)
 {
-  
+  	uint8_t tx_data;
+		uint8_t rx_data;
+		
+		// Set CD to 0
+		GPIOD->DATA &= ~PD7;
+	
+		// Send 0000 yyyy where yyyy is the least significant 4 bits of column number
+		tx_data = column & 0x0F;
+    spiTx(LCD_SPI_BASE, &tx_data, 1, &rx_data);
+		
+		// Send 0001 yyyy where yyyy is the most significant 4 bits of column number
+		tx_data = 0x1F & (column >> 4);
+    spiTx(LCD_SPI_BASE, &tx_data, 1, &rx_data);
+	
+		// Reset CD to 1
+		GPIOD->DATA |= PD7;
 }
   
 //*****************************************************************************
-// Writes 8-bits of data to the current cdolumn of the LCD
+// Writes 8-bits of data to the current column of the LCD
 //*****************************************************************************
   void ece315_lcdWriteData(uint8_t   data)
   {
-    
+		uint8_t rx_data;
+		spiTx(LCD_SPI_BASE, &data, 1, &rx_data);
   }
   
 //*****************************************************************************
@@ -133,7 +160,14 @@ void ece315_lcdSetColumn(uint8_t   column)
 //*****************************************************************************
  void ece315_lcdClear(void)
  {
-   
+		for(int page = 0; page < 8; page++){
+			ece315_lcdSetPage(page);
+			for(int column = 0; column < 102; column++){
+				ece315_lcdSetColumn(column);
+				ece315_lcdWriteData(0x00);
+			}
+		}
+	 
  }
 
 //*****************************************************************************
@@ -147,7 +181,16 @@ void ece315_lcdSetColumn(uint8_t   column)
 //*****************************************************************************
 void ece315_lcdWriteChar( uint8_t page, char c, uint8_t colStart)
  {
-   
+   ece315_lcdSetPage(page);
+	 for(int i = colStart; i < colStart+10; i++){
+		 ece315_lcdSetColumn(i);
+		 ece315_lcdWriteData(courierNew_10ptBitmaps[(30+c)*20]);
+	 }
+	 ece315_lcdSetPage(page + 1);
+	 for(int i = colStart; i < colStart+10; i++){
+		 ece315_lcdSetColumn(i);
+		 ece315_lcdWriteData(courierNew_10ptBitmaps[(30+c)*20 + 10]);
+	 }
  }
  
 //*****************************************************************************
@@ -157,6 +200,9 @@ void ece315_lcdWriteChar( uint8_t page, char c, uint8_t colStart)
 //*****************************************************************************
 void ece315_lcdWriteString( uint8_t line, char *string)
 {
-  
+  for(int i = 0; i < 10; i++){
+		if(string == '\0')
+			return;
+		ece315_lcdWriteChar( line * 2, string[i], 10*i);
+	}
 }  
-
