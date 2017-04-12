@@ -39,6 +39,25 @@ void EnableInterrupts(void)
   }
 }
 
+// TODO
+// FOR LAB 4 : 
+
+/*There are three MaxBotix range finders found on the ECE315 robot platform. One of the sensors (J8 or the left facing sensor)
+measures the distance and outputs the distance information serially via the UART interface. You will need to configure the
+GPIO pins connected to TIVA_SONAR_TX and TIVA_SONAR_RX as digital pins with alternate function behavior
+corresponding to UART.
+In order to initialize the UART peripheral, follow the same implementation as that of serialDebugInit() defined within
+boardUtil.c and boardUtil.h. Notice how a struct has been defined with the UART’s base address and passed as
+argument to the init function. Some of the high-level steps for interfacing are as follows:
+*/
+
+
+// 1) Initialize the corresponding UART peripheral in boardUtil.c
+// 2) Enable UART RX interrupt
+
+
+
+
 
 //*****************************************************************************
 // Configure PA0 and PA1 to be UART pins
