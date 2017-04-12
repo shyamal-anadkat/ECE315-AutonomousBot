@@ -34,10 +34,8 @@
 #include "ece315_lab3.h"
 #include "drv8833.h"
 
-
-
 //*****************************************************************************
-// Global Variables
+// Global Variables : encoder pulses 
 //*****************************************************************************
 extern uint32_t leftA_pulse;
 extern uint32_t leftB_pulse;
@@ -49,10 +47,10 @@ extern uint32_t rightB_pulse;
 void initializeBoard(void)
 {
   DisableInterrupts();
-  serialDebugInit();
-	drv8833_gpioInit();
-	rfInit();
-	encodersInit();
+  serialDebugInit(); 
+	drv8833_gpioInit(); //motors init
+	rfInit();      		 	//RF-initialization
+	encodersInit(); 		//init encoders
   EnableInterrupts();
 }
 
@@ -72,16 +70,16 @@ main(void)
 
   uartTxPoll(UART0_BASE, "\n\r");
   uartTxPoll(UART0_BASE,"**************************************\n\r");
-  uartTxPoll(UART0_BASE,"* ECE315 Default Project\n\r");
+  uartTxPoll(UART0_BASE,"* ECE315 Lab 3 : Shyamal, Jamie, Sneha\n\r");
   uartTxPoll(UART0_BASE,"**************************************\n\r");
   
   // Infinite Loop
   while(1)
   {
 		// Check to see when wireless data arrives
-		
 		status = wireless_get_32(false, &data);
-		if(status == NRF24L01_RX_SUCCESS)
+		
+		if(status == NRF24L01_RX_SUCCESS)   //success status 
 		{
 			memset (msg,0,80);
 			sprintf(msg,"Data RXed: %c%c %d\n\r", data>>24, data >> 16, data & 0xFFFF);
@@ -89,10 +87,11 @@ main(void)
 			sprintf(msg,"LA: %i. LB: %i RA: %i RB: %i", leftA_pulse, leftB_pulse, rightA_pulse, rightB_pulse);
 			uartTxPoll(UART0_BASE, msg);
 			
-			char1 = (data>>24) & 0xFF;
-			char2 = (data>>16) & 0xFF;
+			char1 = (data>>24) & 0xFF;   //Bits 31-24 : DIRECTION
 			
-			speed = data & 0xFFFF;
+			char2 = (data>>16) & 0xFF;	 //Bits 23-16 
+			
+			speed = data & 0xFFFF;       //lower 16 bits: DUTY CYCLE
 			
 			if(char1=='F' & char2 == 'W' )
 			{
@@ -123,10 +122,9 @@ main(void)
 			}
 			else
 			{
-				// Command not recongized
+				// Command not recongized, just halt!
 				drv8833_halt();
 			}
-			
 		}
   }
 }

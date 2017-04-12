@@ -73,12 +73,15 @@ void serialDebugInit(void)
 //*****************************************************************************
 void encodersInit(void)
 {
+	//enable port F and port C 
 	gpio_enable_port(GPIOF_BASE);
 	gpio_enable_port(GPIOC_BASE);
 	
+	//enable all 4 pins as input 
 	gpio_config_enable_input(GPIOF_BASE, PF0 | PF1);
 	gpio_config_enable_input(GPIOC_BASE, PC5 | PC6);
 	
+	// digital enable 
 	gpio_config_digital_enable(GPIOF_BASE, PF0 | PF1);
 	gpio_config_digital_enable(GPIOC_BASE, PC5 | PC6);
 	
