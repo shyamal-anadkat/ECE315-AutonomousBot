@@ -9,27 +9,27 @@
 void ece315_lcdInit(void)
 {
   // Configure SPI CLK
-  gpioConfigDigitalEnable(LCD_GPIO_BASE, LCD_CLK_PIN);
-  gpioConfigAltFunction(LCD_GPIO_BASE, LCD_CLK_PIN);
-  gpioConfigPortConfig(LCD_GPIO_BASE, LCD_CLK_PIN_PCTL);
+  gpio_config_digital_enable(LCD_GPIO_BASE, LCD_CLK_PIN);
+  gpio_config_alternate_function(LCD_GPIO_BASE, LCD_CLK_PIN);
+  gpio_config_port_control(LCD_GPIO_BASE, LCD_CLK_PIN_PCTL);
     
   // Configure SPI CS
-  gpioConfigDigitalEnable(LCD_GPIO_BASE, LCD_CS_PIN);
-  gpioConfigAltFunction(LCD_GPIO_BASE, LCD_CS_PIN);
-  gpioConfigPortConfig(LCD_GPIO_BASE, LCD_CS_PIN_PCTL);
+  gpio_config_digital_enable(LCD_GPIO_BASE, LCD_CS_PIN);
+  gpio_config_alternate_function(LCD_GPIO_BASE, LCD_CS_PIN);
+  gpio_config_port_control(LCD_GPIO_BASE, LCD_CS_PIN_PCTL);
 
   // Configure SPI MOSI
-  gpioConfigDigitalEnable(LCD_GPIO_BASE, LCD_MOSI_PIN);
-  gpioConfigAltFunction(LCD_GPIO_BASE, LCD_MOSI_PIN);
-  gpioConfigPortConfig(LCD_GPIO_BASE, LCD_MOSI_PIN_PCTL);
+  gpio_config_digital_enable(LCD_GPIO_BASE, LCD_MOSI_PIN);
+  gpio_config_alternate_function(LCD_GPIO_BASE, LCD_MOSI_PIN);
+  gpio_config_port_control(LCD_GPIO_BASE, LCD_MOSI_PIN_PCTL);
   
   // Configure CD
-  gpioConfigDigitalEnable(GPIO_LCD_CD_BASE,LCD_CD_PIN);
-  gpioConfigPinAsOutput(GPIO_LCD_CD_BASE,LCD_CD_PIN);
+  gpio_config_digital_enable(GPIO_LCD_CD_BASE,LCD_CD_PIN);
+  gpio_config_enable_output(GPIO_LCD_CD_BASE,LCD_CD_PIN);
   
   // Configure RST_N
-  gpioConfigDigitalEnable(GPIO_LCD_RST_N_BASE, LCD_RST_N_PIN);
-  gpioConfigPinAsOutput(GPIO_LCD_RST_N_BASE, LCD_RST_N_PIN);
+  gpio_config_digital_enable(GPIO_LCD_RST_N_BASE, LCD_RST_N_PIN);
+  gpio_config_enable_output(GPIO_LCD_RST_N_BASE, LCD_RST_N_PIN);
   
   initialize_spi( LCD_SPI_BASE, 3);
   

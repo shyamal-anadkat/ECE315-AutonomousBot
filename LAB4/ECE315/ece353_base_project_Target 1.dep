@@ -1,0 +1,86 @@
+Dependencies for Project 'ece353_base_project', Target 'Target 1': (DO NOT MODIFY !)
+F (.\main.c)(0x580FB472)(-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\3.20.4\CMSIS\Include -I..\include-I I:\ECE315\LAB4\ECE315\RTE-I C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include-I C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123-D_RTE_ -DTM4C123GH6PM -o .\obj\main.o --omf_browse .\obj\main.crf --depend .\obj\main.d)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\stdio.h)(0x57D6B510)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\stdint.h)(0x57D6B510)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\string.h)(0x57D6B511)
+I (C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\TM4C123.h)(0x57D9590B)
+I (C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\TM4C123GH6PM.h)(0x57D9590D)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cm4.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cmInstr.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cmFunc.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cm4_simd.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\system_TM4C123.h)(0x57D9590B)
+I (boardUtil.h)(0x58EE6467)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\stdlib.h)(0x57D6B511)
+I (../include/sysctrl.h)(0x580FB472)
+I (..\include\uart.h)(0x580FB472)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\stdbool.h)(0x57D6B510)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\errno.h)(0x57D6B50A)
+I (..\include\gpioPort.h)(0x580FB472)
+I (..\include\i2c.h)(0x580FB472)
+F (.\boardUtil.c)(0x580FB472)(-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\3.20.4\CMSIS\Include -I..\include-I I:\ECE315\LAB4\ECE315\RTE-I C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include-I C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123-D_RTE_ -DTM4C123GH6PM -o .\obj\boardutil.o --omf_browse .\obj\boardutil.crf --depend .\obj\boardutil.d)
+I (C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\TM4C123GH6PM.h)(0x57D9590D)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cm4.h)(0x57DFF4C7)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\stdint.h)(0x57D6B510)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cmInstr.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cmFunc.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cm4_simd.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\system_TM4C123.h)(0x57D9590B)
+I (boardUtil.h)(0x58EE6467)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\stdio.h)(0x57D6B510)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\string.h)(0x57D6B511)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\stdlib.h)(0x57D6B511)
+I (../include/sysctrl.h)(0x580FB472)
+I (..\include\uart.h)(0x580FB472)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\stdbool.h)(0x57D6B510)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\errno.h)(0x57D6B50A)
+I (..\include\gpioPort.h)(0x580FB472)
+I (C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\TM4C123.h)(0x57D9590B)
+I (..\include\i2c.h)(0x580FB472)
+F (.\interrupts.c)(0x580FB472)(-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\3.20.4\CMSIS\Include -I..\include-I I:\ECE315\LAB4\ECE315\RTE-I C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include-I C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123-D_RTE_ -DTM4C123GH6PM -o .\obj\interrupts.o --omf_browse .\obj\interrupts.crf --depend .\obj\interrupts.d)
+I (..\include\interrupts.h)(0x58EE6471)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\stdint.h)(0x57D6B510)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\stdbool.h)(0x57D6B510)
+I (C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\TM4C123.h)(0x57D9590B)
+I (C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\TM4C123GH6PM.h)(0x57D9590D)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cm4.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cmInstr.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cmFunc.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cm4_simd.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\system_TM4C123.h)(0x57D9590B)
+I (..\include\uart.h)(0x580FB472)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\stdio.h)(0x57D6B510)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\errno.h)(0x57D6B50A)
+I (..\include\../include/sysctrl.h)(0x580FB472)
+F (.\lcd.c)(0x58EE6841)(-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\3.20.4\CMSIS\Include -I..\include-I I:\ECE315\LAB4\ECE315\RTE-I C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include-I C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123-D_RTE_ -DTM4C123GH6PM -o .\obj\lcd.o --omf_browse .\obj\lcd.crf --depend .\obj\lcd.d)
+I (lcd.h)(0x580FB578)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\stdint.h)(0x57D6B510)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\stdbool.h)(0x57D6B510)
+I (boardUtil.h)(0x58EE6467)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\stdio.h)(0x57D6B510)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\string.h)(0x57D6B511)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\stdlib.h)(0x57D6B511)
+I (../include/sysctrl.h)(0x580FB472)
+I (..\include\uart.h)(0x580FB472)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\errno.h)(0x57D6B50A)
+I (C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\TM4C123GH6PM.h)(0x57D9590D)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cm4.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cmInstr.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cmFunc.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cm4_simd.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\system_TM4C123.h)(0x57D9590B)
+I (..\include\gpioPort.h)(0x580FB472)
+I (C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\TM4C123.h)(0x57D9590B)
+I (..\include\i2c.h)(0x580FB472)
+I (../include/spi.h)(0x580FB472)
+F (..\lib\ece315.lib)(0x58179CA4)()
+F (RTE\Device\TM4C123GH6PM\startup_TM4C123.s)(0x580FB472)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1"-I I:\ECE315\LAB4\ECE315\RTE-I C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include-I C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123--list .\lst\startup_tm4c123.lst --xref -o .\obj\startup_tm4c123.o --depend .\obj\startup_tm4c123.d)
+F (RTE\Device\TM4C123GH6PM\system_TM4C123.c)(0x580FB472)(-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -IC:\Keil_v5\ARM\Pack\ARM\CMSIS\3.20.4\CMSIS\Include -I..\include-I I:\ECE315\LAB4\ECE315\RTE-I C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include-I C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123-D_RTE_ -DTM4C123GH6PM -o .\obj\system_tm4c123.o --omf_browse .\obj\system_tm4c123.crf --depend .\obj\system_tm4c123.d)
+I (C:\ProgramData\App-V\61A5EFCB-2A44-465D-90CC-A7A4A41DA0A8\D50B82DC-885B-4BF1-9479-31B1EC1F01B7\Root\ARM\ARMCC\include\stdint.h)(0x57D6B510)
+I (C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\TM4C123.h)(0x57D9590B)
+I (C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\TM4C123GH6PM.h)(0x57D9590D)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cm4.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cmInstr.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cmFunc.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cm4_simd.h)(0x57DFF4C7)
+I (C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\system_TM4C123.h)(0x57D9590B)
