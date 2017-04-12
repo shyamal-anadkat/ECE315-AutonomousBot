@@ -15,22 +15,22 @@
 // Replace UNKNOWN with the correct pin and port information from the 
 // robot schematic on the class website.
 //*****************************************************************************
-#define   LCD_GPIO_BASE       UNKNOWN
-#define   LCD_SPI_BASE        UNKNOWN
-#define   LCD_CLK_PIN         UNKNOWN
-#define   LCD_CS_PIN          UNKNOWN
-#define   LCD_MOSI_PIN        UNKNOWN
+#define   LCD_GPIO_BASE       GPIOD_BASE
+#define   LCD_SPI_BASE        SSI3_BASE
+#define   LCD_CLK_PIN         PD0
+#define   LCD_CS_PIN          PD1
+#define   LCD_MOSI_PIN        PD3
 
-#define   LCD_CLK_PIN_PCTL    UNKNOWN
-#define   LCD_CS_PIN_PCTL     UNKNOWN
-#define   LCD_MOSI_PIN_PCTL   UNKNOWN
+#define   LCD_CLK_PIN_PCTL    GPIO_PCTL_PD0_SSI3CLK
+#define   LCD_CS_PIN_PCTL     GPIO_PCTL_PD1_SSI3FSS
+#define   LCD_MOSI_PIN_PCTL   GPIO_PCTL_PD3_SSI3TX
 
 
-#define   GPIO_LCD_CD_BASE    UNKNOWN
-#define   LCD_CD_PIN          UNKNOWN
+#define   GPIO_LCD_CD_BASE    GPIOD_BASE
+#define   LCD_CD_PIN          PD7
 
-#define   GPIO_LCD_RST_N_BASE UNKNOWN
-#define   LCD_RST_N_PIN       UNKNOWN
+#define   GPIO_LCD_RST_N_BASE GPIOD_BASE
+#define   LCD_RST_N_PIN       PD6
 
 //*****************************************************************************
 // Initializes the pins needed to communicate with the LCD and issues the 

@@ -32,14 +32,76 @@ void ece315_lcdInit(void)
   gpio_config_enable_output(GPIO_LCD_RST_N_BASE, LCD_RST_N_PIN);
   
   initialize_spi( LCD_SPI_BASE, 3);
-  
-  
+  	
+		
+	//****LCD INIT -- LAB 4*** 
+	GPIOA_Type  *gpioResetPtr;
+  GPIOA_Type  *gpioCmdPtr;
+	uint8_t tx_data, rx_data;
+	//gpioResetPtr  = (GPIOA_Type *)lcdConfig.reset_pin_base;
+  //gpioCmdPtr    = (GPIOA_Type *)lcdConfig.cmd_pin_base;
+	
   // Bring the LCD out of reset
+	((GPIOA_Type *)GPIOD_BASE)->DATA |= PD6;
   
   // Use spiTx() from the ece315 driver library to issue the sequence of 
   // commands in the LCD data sheet to initialize the LCD.  
+	
+	//Enter Command Mode
+  gpioCmdPtr->DATA &= ~LCD_CD_PIN  ;
+ 
+	//Set Scroll Line
+  tx_data = 0x40;
+  spiTx(SSI3_BASE,&tx_data, 1, &rx_data);
   
+  //Set SEG Directions
+  tx_data = 0xA1;
+  spiTx(SSI3_BASE,&tx_data, 1, &rx_data);
   
+  //Set COM direction
+  tx_data = 0xC0;
+  spiTx(SSI3_BASE,&tx_data, 1, &rx_data);
+  
+  //Set All Pixel on
+  tx_data = 0xA4;
+  spiTx(SSI3_BASE,&tx_data, 1, &rx_data);
+  
+  //Set Inverse Display
+  tx_data = 0xA6;
+  spiTx(SSI3_BASE,&tx_data, 1, &rx_data);
+  
+  //Set LCD Bias Ratio
+  tx_data = 0xA2;
+  spiTx(SSI3_BASE,&tx_data, 1, &rx_data);
+  
+  //Set Power Control
+  tx_data = 0x2F;
+  spiTx(SSI3_BASE,&tx_data, 1, &rx_data);
+  
+  //Set VLCD Resistor Ratio
+  tx_data = 0x27;
+  spiTx(SSI3_BASE,&tx_data, 1, &rx_data);
+  
+  //Set Electronic Volume
+  tx_data = 0x81;
+  spiTx(SSI3_BASE,&tx_data, 1, &rx_data);
+	
+  tx_data = 0x10;
+  spiTx(SSI3_BASE,&tx_data, 1, &rx_data);
+  
+  //Set Adv Program Control
+  tx_data = 0xFA;
+  spiTx(SSI3_BASE, &tx_data, 1, &rx_data);
+	
+  tx_data = 0x90;
+  spiTx(SSI3_BASE,&tx_data, 1, &rx_data);
+  
+  //Set Display Enable
+  tx_data = 0xAF;
+  spiTx(SSI3_BASE,&tx_data, 1, &rx_data);
+
+  //Exit Command Mode
+  gpioCmdPtr->DATA |=  LCD_CD_PIN;
 }
 
  //****************************************************************************
@@ -59,7 +121,7 @@ void ece315_lcdSetColumn(uint8_t   column)
 }
   
 //*****************************************************************************
-// Writes 8-bits of data to the current column of the LCD
+// Writes 8-bits of data to the current cdolumn of the LCD
 //*****************************************************************************
   void ece315_lcdWriteData(uint8_t   data)
   {

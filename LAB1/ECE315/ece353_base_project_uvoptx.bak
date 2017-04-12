@@ -177,7 +177,7 @@
       <Focus>1</Focus>
       <ColumnNumber>19</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>89</TopLine>
+      <TopLine>28</TopLine>
       <CurrentLine>29</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
@@ -193,7 +193,7 @@
       <Focus>1</Focus>
       <ColumnNumber>27</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>55</TopLine>
+      <TopLine>56</TopLine>
       <CurrentLine>72</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\boardUtil.c</PathWithFileName>
@@ -209,7 +209,7 @@
       <Focus>0</Focus>
       <ColumnNumber>27</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
+      <TopLine>2</TopLine>
       <CurrentLine>25</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\interrupts.c</PathWithFileName>
