@@ -190,16 +190,22 @@ void ece315_lcdSetColumn(uint8_t   column)
 //*****************************************************************************
 void ece315_lcdWriteChar( uint8_t page, char c, uint8_t colStart)
  {
-	 int i, j;
+	 const uint8_t* wrdat = &courierNew_10ptBitmaps[(c - 32) * 20];
+	 uint8_t i;
+	 
    ece315_lcdSetPage(page);
-	 for(i = colStart; i < colStart+10; i++){
+	 
+	 for (i = colStart; i < colStart + 10; i++) {
 		 ece315_lcdSetColumn(i);
-		 ece315_lcdWriteData(courierNew_10ptBitmaps[(30+c)*20]);
+		 ece315_lcdWriteData(*wrdat);
+		 wrdat++;
 	 }
-	 ece315_lcdSetPage(page + 1);
-	 for(j = colStart; j < colStart+10; j++){
-		 ece315_lcdSetColumn(j);
-		 ece315_lcdWriteData(courierNew_10ptBitmaps[(30+c)*20 + 10]);
+   ece315_lcdSetPage(page + 1);
+	 
+	 for (i = colStart; i < colStart + 10; i++) {
+		 ece315_lcdSetColumn(i);
+		 ece315_lcdWriteData(*wrdat);
+		 wrdat++;
 	 }
  }
  
