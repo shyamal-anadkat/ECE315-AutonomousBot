@@ -106,6 +106,8 @@ void ece315_lcdInit(void)
 
   //Exit Command Mode
   gpioCmdPtr->DATA |=  LCD_CD_PIN;
+	
+	ece315_lcdClear();
 }
 
  //****************************************************************************
@@ -156,7 +158,7 @@ void ece315_lcdSetColumn(uint8_t   column)
   void ece315_lcdWriteData(uint8_t   data)
   {
 		uint8_t rx_data;
-		GPIOD->DATA |= PD7;
+		//GPIOD->DATA |= PD7;
 		spiTx(LCD_SPI_BASE, &data, 1, &rx_data);
   }
   
