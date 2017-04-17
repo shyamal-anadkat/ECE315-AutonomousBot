@@ -29,6 +29,7 @@
 #include <string.h>
 
 
+#include "lcd.h"
 #include "TM4C123.h"
 #include "boardUtil.h"
 
@@ -45,6 +46,7 @@ void initializeBoard(void)
 {
   DisableInterrupts();
   serialDebugInit();
+	ece315_lcdInit();
   EnableInterrupts();
 }
 
@@ -63,9 +65,19 @@ main(void)
   uartTxPoll(UART0_BASE,"* ECE315 Default Project\n\r");
   uartTxPoll(UART0_BASE,"**************************************\n\r");
   
+	//ece315_lcdSetPage(0x09);
+	//ece315_lcdSetColumn(0x0A);
+	//ece315_lcdWriteData(0xFF);
+	ece315_lcdClear();
+	ece315_lcdWriteString(0, "a");
+	ece315_lcdWriteString(0, "aaaaaaaaaaaaaa");
+	ece315_lcdWriteString(1, "b");
+	ece315_lcdWriteString(2, "c");
+	ece315_lcdWriteString(3, "d");
+	ece315_lcdClear();
   // Infinite Loop
   while(1)
   {
-
+		
   }
 }
