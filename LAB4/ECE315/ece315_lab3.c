@@ -1,5 +1,6 @@
 #include "ece315_lab3.h"
 
+// values on the controller board serial terminal 
  static uint8_t ece353_ids[5]= {'3','5','3','5','0'};
  static uint8_t ece315_ids[5]= {'3','1','5','5','1'};
   

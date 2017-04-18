@@ -67,9 +67,6 @@ void serialDebugInit(void)
   );
 }
 
-
-
-
 //sensor config for sonar an, pw an tx !!
 void sensor_config() {
 	
@@ -144,9 +141,6 @@ void encodersInit(void)
 	NVIC_EnableIRQ(GPIOF_IRQn);
 	NVIC_EnableIRQ(GPIOC_IRQn);
 }
-
-
-
 
 //************************************************************************
 // Configure UART0 to be 9600, 8N1. 

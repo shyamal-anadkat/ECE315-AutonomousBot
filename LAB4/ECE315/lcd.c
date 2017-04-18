@@ -103,7 +103,6 @@ void ece315_lcdInit(void)
 	
   spiTx(SSI3_BASE,&tx_data, 1, &rx_data);
 	
-
   //Exit Command Mode
   gpioCmdPtr->DATA |=  LCD_CD_PIN;
 	

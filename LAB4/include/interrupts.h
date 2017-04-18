@@ -9,5 +9,6 @@
 //#include "pc_buffer.h"
 
 void UART0_Handler(void);
+void UART7_Handler(void);
 
 #endif

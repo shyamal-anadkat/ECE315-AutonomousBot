@@ -1,13 +1,13 @@
---cpu Cortex-M4.fp
+--cpu=Cortex-M4.fp
 ".\obj\main.o"
 ".\obj\boardutil.o"
 ".\obj\interrupts.o"
 ".\obj\lcd.o"
 ".\obj\fonts.o"
-".\obj\drv8833.o"
+".\obj\encoders.o"
 ".\obj\pwm.o"
 ".\obj\ece315_lab3.o"
-".\obj\encoders.o"
+".\obj\drv8833.o"
 "..\lib\ece315.lib"
 ".\obj\startup_tm4c123.o"
 ".\obj\system_tm4c123.o"

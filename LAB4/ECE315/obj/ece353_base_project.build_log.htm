@@ -2,76 +2,90 @@
 <body>
 <pre>
 <h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.22.0.0
+Copyright (C) 2016 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Shyamal Anadkat, UW-Madison, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.22
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 4 (build 422)
+Assembler:       Armasm.exe V5.06 update 4 (build 422)
+Linker/Locator:  ArmLink.exe V5.06 update 4 (build 422)
+Library Manager: ArmAr.exe V5.06 update 4 (build 422)
+Hex Converter:   FromElf.exe V5.06 update 4 (build 422)
+CPU DLL:         SARMCM3.DLL V5.22
+Dialog DLL:      DCM.DLL V1.13.9.0
+Target DLL:      lmidk-agdi.dll V???
+Dialog DLL:      TCM.DLL V1.21.0.0
+ 
 <h2>Project:</h2>
-I:\ECE315\ECE315-master\ECE315-master\LAB4\ECE315\ece353_base_project.uvprojx
-Project File Date:  04/17/2017
+C:\ECE315\LAB4\ECE315\ece353_base_project.uvprojx
+Project File Date:  04/18/2017
 
 <h2>Output:</h2>
-Build target 'Target 1'
+*** Using Compiler 'V5.06 update 4 (build 422)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'Target 1'
+compiling interrupts.c...
+compiling boardUtil.c...
 compiling main.c...
-main.c(169): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
-                ece315_lcdWriteString(0, leftBuf);
+main.c(78): warning:  #177-D: variable "i"  was declared but never referenced
+  	int i;
 main.c: 1 warning, 0 errors
+compiling fonts.c...
+compiling encoders.c...
+encoders.h(7): warning:  #1-D: last line of file ends without a newline
+  #endif
+encoders.c(5): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  	return (inches * 12.15);
+encoders.c(6): warning:  #1-D: last line of file ends without a newline
+  }
+encoders.c: 3 warnings, 0 errors
+compiling lcd.c...
+compiling pwm.c...
+pwm.c(79): warning:  #1-D: last line of file ends without a newline
+  }
+pwm.c: 1 warning, 0 errors
+compiling ece315_lab3.c...
+assembling startup_TM4C123.s...
+compiling drv8833.c...
+drv8833.c(110): warning:  #1-D: last line of file ends without a newline
+  }
+drv8833.c: 1 warning, 0 errors
+compiling system_TM4C123.c...
 linking...
-Program Size: Code=8886 RO-data=3010 RW-data=36 ZI-data=4172  
-".\obj\ece353_base_project.axf" - 0 Error(s), 1 Warning(s).
+Program Size: Code=12024 RO-data=3008 RW-data=32 ZI-data=4176  
+".\obj\ece353_base_project.axf" - 0 Error(s), 6 Warning(s).
 
 <h2>Software Packages used:</h2>
 
 Package Vendor: ARM
-                http://www.keil.com/pack/ARM.CMSIS.4.1.1.pack
-                ARM::CMSIS:CORE:3.30.0
+                http://www.keil.com/pack/ARM.CMSIS.5.0.1.pack
+                ARM::CMSIS:CORE:5.0.1
                 CMSIS (Cortex Microcontroller Software Interface Standard)
-   * Component: CORE Version: 3.30.0
+   * Component: CORE Version: 5.0.1
 
 Package Vendor: Keil
-                http://www.keil.com/pack/Keil.TM4C_DFP.1.0.0.pack
-                Keil::Device:Startup:1.0.0
+                http://www.keil.com/pack/Keil.TM4C_DFP.1.1.0.pack
+                Keil::Device:Startup:1.0.1
                 Texas Instruments Tiva C Series Device Support and Examples
-   * Component: Startup Version: 1.0.0
+   * Component: Startup Version: 1.0.1
 
 <h2>Collection of Component include folders:</h2>
-  I:\ECE315\ECE315-master\ECE315-master\LAB4\ECE315\RTE
-  C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include
-  C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123
+  C:\ECE315\LAB4\ECE315\RTE\_Target_1
+  C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include
+  C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123
 
 <h2>Collection of Component Files used:</h2>
 
-   * Component: ARM::CMSIS:CORE:3.30.0
-      Source file:   CMSIS\UserCodeTemplates\ARM\ITM_Retarget.c
+   * Component: ARM::CMSIS:CORE:5.0.1
 
-   * Component: Keil::Device:Startup:1.0.0
-      Source file:   Device\Source\ARM\startup_TM4C123.s
+   * Component: Keil::Device:Startup:1.0.1
       Include file:  Device\Include\TM4C123\TM4C123.h
       Source file:   Device\Source\system_TM4C123.c
-Load "I:\\ECE315\\ECE315-master\\ECE315-master\\LAB4\\ECE315\\obj\\ece353_base_project.axf" 
-Connecting: Mode=JTAG, Speed=1000000Hz
-Erase Done.
-Programming Done.
-Verify OK.
-.pack
-                ARM::CMSIS:CORE:3.30.0
-                CMSIS (Cortex Microcontroller Software Interface Standard)
-   * Component: CORE Version: 3.30.0
-
-Package Vendor: Keil
-                http://www.keil.com/pack/Keil.TM4C_DFP.1.0.0.pack
-                Keil::Device:Startup:1.0.0
-                Texas Instruments Tiva C Series Device Support and Examples
-   * Component: Startup Version: 1.0.0
-
-<h2>Collection of Component include folders:</h2>
-  I:\ECE315\ECE315-master\ECE315-master\LAB4\ECE315\RTE
-  C:\AppV\mdk_510\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include
-  C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123
-
-<h2>Collection of Component Files used:</h2>
-
-   * Component: ARM::CMSIS:CORE:3.30.0
-      Source file:   CMSIS\UserCodeTemplates\ARM\ITM_Retarget.c
-
-   * Component: Keil::Device:Startup:1.0.0
       Source file:   Device\Source\ARM\startup_TM4C123.s
-      Include file:  Device\Include\TM4C123\TM4C123.h
-      Source file:   Device\Source\system_TM4C123.c
-Target not created
+Build Time Elapsed:  00:00:01
+</pre>
+</body>
+</html>

@@ -28,7 +28,7 @@
 #include <stdint.h>
 #include <string.h>
 
-
+//Inlude headers
 #include "lcd.h"
 #include "TM4C123.h"
 #include "boardUtil.h"
@@ -41,25 +41,24 @@
 // Global Variables
 //*****************************************************************************
 char console[50];
-volatile char leftBuf[4];
-
-// not using these for lab4
-volatile bool AlertSysTick; 
-volatile bool Alert10ms; 
-volatile bool Alert1s;  
+char leftBuf[4];
+float distdata;  
   
 //*****************************************************************************
+// INITIALIZE BOARD AND HARDWARE 
 //*****************************************************************************
 void initializeBoard(void)
 {
   DisableInterrupts();
-  serialDebugInit();
-	ece315_lcdInit();
+	
+  serialDebugInit();	//serial-debug initialization
+	ece315_lcdInit();   //lcd-init
 	drv8833_gpioInit(); //motors init
 	rfInit();      		 	//RF-initialization
 	encodersInit(); 		//init encoders
-	sensor_config();
+	sensor_config();		//sensor-config
 	initializeADC(ADC0_BASE);
+	
   EnableInterrupts();
 }
 
@@ -69,29 +68,41 @@ void initializeBoard(void)
 int 
 main(void)
 {
+	//****VARIABLES******//
 	char msg[80];
+	char dist[6];
 	wireless_com_status_t status;
 	uint32_t data;
 	uint8_t char1, char2;
 	uint16_t speed;
 	int i;
+	dist[0] = 'D';
+	dist[1] = 'I';
+	dist[2] = 'S';
+	dist[3] = 'T';
+	dist[4] = ':';
+	dist[5] = ' ';
+	//******************//
   
+	
+	// Init hardware and peripherals 
   initializeBoard();
 
   uartTxPoll(UART0_BASE, "\n\r");
   uartTxPoll(UART0_BASE,"**************************************\n\r");
-  uartTxPoll(UART0_BASE,"* ECE315 Default Project\n\r");
+  uartTxPoll(UART0_BASE,"* ECE315 Lab 4 - Sneha, Shyamal, Jamie\n\r");
   uartTxPoll(UART0_BASE,"**************************************\n\r");
   
   while(1)
   {
-				// Check to see when wireless data arrives
+		// Check to see when wireless data arrives
 		status = wireless_get_32(false, &data);
 		
 		if(status == NRF24L01_RX_SUCCESS)   //success status 
 		{
 			memset (msg,0,80);
 			sprintf(msg,"Data RXed: %c%c %d\n\r", data>>24, data >> 16, data & 0xFFFF);
+			
 			uartTxPoll(UART0_BASE, msg);
 			uartTxPoll(UART0_BASE, msg);
 			
@@ -104,71 +115,53 @@ main(void)
 			if(char1=='F' & char2 == 'W' )
 			{
 				// Forward
+				ece315_lcdWriteString(1, "DIR: FWD"); 		//print out the direction data 
 				drv8833_leftForward(speed);
 				drv8833_rightForward(speed);
-				//ece315_lcdWriteString(1, "DIR: FWD");
+				//drv8833_halt();
 			}
 			else if(char1=='R' & char2 == 'V')
 			{
 				// Reverse
+				ece315_lcdWriteString(1, "DIR: REV");			//print the reverse direction data
 				drv8833_leftReverse(speed);
 				drv8833_rightReverse(speed);
-				//ece315_lcdWriteString(1, "DIR: REV");
+				//drv8833_halt();
 			}
 			else if(char1=='R' & char2 == 'T')
 			{
 				// Right
+				ece315_lcdWriteString(1, "DIR: TURN");
 				drv8833_turnRight(speed);
-				//ece315_lcdWriteString(1, "DIR: TURN");
 			}
 			else if(char1=='L' & char2 == 'F')
 			{
 				// Left
+				ece315_lcdWriteString(1, "DIR: TURN");
 				drv8833_turnLeft(speed);
-				//ece315_lcdWriteString(1, "DIR: TURN");
 			}
 			else if(char1=='S' & char2 == 'T')
 			{
 				// Stop
+				ece315_lcdWriteString(1, "DIR: STOP");
 				drv8833_halt();
 			}
 			else
 			{
 				// Command not recongized, just halt!
+				ece315_lcdWriteString(1, "DIR: STOP");
 				drv8833_halt();
 			}
-		
   }
 		
-		if(char1=='F' & char2 == 'W' )
-			{
-				// Forward
-				ece315_lcdWriteString(1, "DIR: FWD");
-			}
-			else if(char1=='R' & char2 == 'V')
-			{
-				// Reverse
-				ece315_lcdWriteString(1, "DIR: REV");
-			}
-			else if(char1=='R' & char2 == 'T')
-			{
-				// Right
-				ece315_lcdWriteString(1, "DIR: TURN");
-			}
-			else if(char1=='L' & char2 == 'F')
-			{
-				// Left
-				ece315_lcdWriteString(1, "DIR: TURN");
-			}
-	  
-		sscanf((char*) leftBuf, "%d", &i);
-		//ece315_lcdWriteString(0, "DIST");
-			
-		//memset (msg,0,80);
-		//sprintf(msg,"DIST: %d%d%d,%d", leftBuf[0], leftBuf[1], leftBuf[2], leftBuf[3]);
-		ece315_lcdWriteString(0, leftBuf);
+		// prints out distance data in float pointer format 
+		distdata = (float)atof(leftBuf);
+		sprintf((dist + 6), "%f", distdata);
+		ece315_lcdWriteString(0, dist);
+		
+		// prints out the dist data to debug
 		sprintf(console, "Left (polling) : %s\n\r", leftBuf);
 		uartTxPoll(UART0_BASE, console);
-		//ece315_lcdClear();
-}
+		// ece315_lcdClear();
+	}
 }
