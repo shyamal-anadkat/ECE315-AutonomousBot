@@ -39,25 +39,6 @@ void EnableInterrupts(void)
   }
 }
 
-// TODO
-// FOR LAB 4 : 
-
-/*There are three MaxBotix range finders found on the ECE315 robot platform. One of the sensors (J8 or the left facing sensor)
-measures the distance and outputs the distance information serially via the UART interface. You will need to configure the
-GPIO pins connected to TIVA_SONAR_TX and TIVA_SONAR_RX as digital pins with alternate function behavior
-corresponding to UART.
-In order to initialize the UART peripheral, follow the same implementation as that of serialDebugInit() defined within
-boardUtil.c and boardUtil.h. Notice how a struct has been defined with the UART’s base address and passed as
-argument to the init function. Some of the high-level steps for interfacing are as follows:
-*/
-
-
-// 1) Initialize the corresponding UART peripheral in boardUtil.c
-// 2) Enable UART RX interrupt
-
-
-
-
 
 //*****************************************************************************
 // Configure PA0 and PA1 to be UART pins
@@ -84,4 +65,109 @@ void serialDebugInit(void)
     SYSCTL_RCGCUART_R0, 
     SYSCTL_PRUART_R0
   );
+}
+
+
+
+
+//sensor config for sonar an, pw an tx !!
+void sensor_config() {
+	
+	//for scope measurements 
+	gpio_enable_port(GPIOF_BASE);
+	gpio_config_enable_output(GPIOF_BASE, PF1);
+	gpio_config_digital_enable( GPIOF_BASE, PF1);
+	
+	//SONAR_PW
+	gpio_enable_port(GPIOE_BASE);
+	gpio_config_enable_input(GPIOE_BASE, PE2);
+  gpio_config_digital_enable( GPIOE_BASE, PE2);
+  
+	//SONAR_AN
+	gpio_config_enable_input(GPIOE_BASE, PE3);
+	gpio_config_analog_enable(GPIOE_BASE, PE3);
+  gpio_config_alternate_function( GPIOE_BASE, PE3);
+	
+	//SONAR_TX
+  gpio_config_digital_enable( GPIOE_BASE, PE0 | PE1);
+  gpio_config_alternate_function( GPIOE_BASE, PE0 | PE1);
+  gpio_config_port_control( GPIOE_BASE, GPIO_PCTL_PE0_U7RX | GPIO_PCTL_PE1_U7TX);
+	
+	uart_init_9600(UART7_BASE, SYSCTL_RCGCUART_R7, SYSCTL_PRUART_R7);
+
+	NVIC_EnableIRQ(UART7_IRQn);
+	NVIC_SetPriority(UART7_IRQn, 3);	
+}
+
+
+
+
+//*****************************************************************************
+// Configure PF0 (LeftA), PF1(LeftB), PC5(RightA), PC6(RightB)
+// sp that they generate interrupts on rising and falling edges
+//*****************************************************************************
+void encodersInit(void)
+{
+	//enable port F and port C 
+	gpio_enable_port(GPIOF_BASE);
+	gpio_enable_port(GPIOC_BASE);
+	
+	//enable all 4 pins as input 
+	gpio_config_enable_input(GPIOF_BASE, PF0 | PF1);
+	gpio_config_enable_input(GPIOC_BASE, PC5 | PC6);
+	
+	// digital enable 
+	gpio_config_digital_enable(GPIOF_BASE, PF0 | PF1);
+	gpio_config_digital_enable(GPIOC_BASE, PC5 | PC6);
+	
+	GPIOF->IS &= ~(PF0 | PF1);
+	GPIOC->IS &= ~(PC5 | PC6);
+	
+	// clear any outstanding interruprs 
+	GPIOF->ICR |= PF0 | PF1;
+	GPIOC->ICR |= PC5 | PC6;
+	
+	//controlled by IEV
+	GPIOF->IBE &= ~(PF0 | PF1);
+	GPIOC->IBE &= ~(PC5 | PC6);
+	
+	GPIOF->IEV |= PF0 | PF1;
+	GPIOC->IEV |= PC5 | PC6;
+	
+	//enable interrupt masks
+	GPIOF->IM |= PF0 | PF1;
+	GPIOC->IM |= (PC5 | PC6);
+	
+	NVIC_SetPriority(GPIOF_IRQn, 1);
+	NVIC_SetPriority(GPIOC_IRQn, 2);
+	
+	NVIC_EnableIRQ(GPIOF_IRQn);
+	NVIC_EnableIRQ(GPIOC_IRQn);
+}
+
+
+
+
+//************************************************************************
+// Configure UART0 to be 9600, 8N1. 
+//************************************************************************
+void uart_init_9600(
+  uint32_t base_addr, 
+  uint32_t rcgc_mask, 
+  uint32_t pr_mask
+)
+{
+    UART0_Type *myUart;
+    myUart = (UART0_Type *)base_addr;
+    SYSCTL->RCGCUART |= rcgc_mask;
+    
+    while( (SYSCTL->PRUART & pr_mask) == 0)
+    {}
+    myUart->IBRD = 325;
+    myUart->FBRD = 33;
+    myUart->CTL &= ~UART_CTL_UARTEN;
+    myUart->LCRH =   UART_LCRH_WLEN_8 | UART_LCRH_FEN;
+    myUart->IFLS = UART_IFLS_RX2_8;  
+		myUart->IM |= UART_IM_RXIM;
+    myUart->CTL =  UART_CTL_RXE | UART_CTL_UARTEN;
 }

@@ -145,7 +145,8 @@ void ece315_lcdSetColumn(uint8_t   column)
     spiTx(LCD_SPI_BASE, &tx_data, 1, &rx_data);
 		
 		// Send 0001 yyyy where yyyy is the most significant 4 bits of column number
-		tx_data = 0x1F & (column >> 4);
+		tx_data = 0x0F & (column >> 4);
+	  tx_data |= 0x10;
     spiTx(LCD_SPI_BASE, &tx_data, 1, &rx_data);
 	
 		// Reset CD to 1
@@ -218,7 +219,7 @@ void ece315_lcdWriteString( uint8_t line, char *string)
 {
 	int i;
   for(i = 0; i < 10; i++){
-		if(string == '\0')
+		if(string[i] == '\0')
 			return;
 		ece315_lcdWriteChar( line * 2, string[i], 10*i);
 	}

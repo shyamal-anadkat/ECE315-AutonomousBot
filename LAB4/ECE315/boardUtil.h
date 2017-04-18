@@ -123,5 +123,8 @@ void serialDebugInit(void);
 void i2cInit(void);
 void DisableInterrupts(void);
 void EnableInterrupts(void);
+void sensor_config(void);
+void encodersInit(void);
+void uart_init_9600(uint32_t , uint32_t , uint32_t);
 
 #endif

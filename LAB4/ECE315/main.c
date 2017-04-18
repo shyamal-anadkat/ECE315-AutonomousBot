@@ -32,13 +32,21 @@
 #include "lcd.h"
 #include "TM4C123.h"
 #include "boardUtil.h"
-
+#include "ece315_lab3.h"
+#include "drv8833.h"
+#include "adc.h"
 
 
 //*****************************************************************************
 // Global Variables
 //*****************************************************************************
+char console[50];
+volatile char leftBuf[4];
 
+// not using these for lab4
+volatile bool AlertSysTick; 
+volatile bool Alert10ms; 
+volatile bool Alert1s;  
   
 //*****************************************************************************
 //*****************************************************************************
@@ -47,6 +55,11 @@ void initializeBoard(void)
   DisableInterrupts();
   serialDebugInit();
 	ece315_lcdInit();
+	drv8833_gpioInit(); //motors init
+	rfInit();      		 	//RF-initialization
+	encodersInit(); 		//init encoders
+	sensor_config();
+	initializeADC(ADC0_BASE);
   EnableInterrupts();
 }
 
@@ -56,7 +69,12 @@ void initializeBoard(void)
 int 
 main(void)
 {
-
+	char msg[80];
+	wireless_com_status_t status;
+	uint32_t data;
+	uint8_t char1, char2;
+	uint16_t speed;
+	int i;
   
   initializeBoard();
 
@@ -65,19 +83,92 @@ main(void)
   uartTxPoll(UART0_BASE,"* ECE315 Default Project\n\r");
   uartTxPoll(UART0_BASE,"**************************************\n\r");
   
-	//ece315_lcdSetPage(0x09);
-	//ece315_lcdSetColumn(0x0A);
-	//ece315_lcdWriteData(0xFF);
-	ece315_lcdClear();
-	ece315_lcdWriteString(0, "a");
-	ece315_lcdWriteString(0, "aaaaaaaaaaaaaa");
-	ece315_lcdWriteString(1, "b");
-	ece315_lcdWriteString(2, "c");
-	ece315_lcdWriteString(3, "d");
-	ece315_lcdClear();
-  // Infinite Loop
   while(1)
   {
+				// Check to see when wireless data arrives
+		status = wireless_get_32(false, &data);
+		
+		if(status == NRF24L01_RX_SUCCESS)   //success status 
+		{
+			memset (msg,0,80);
+			sprintf(msg,"Data RXed: %c%c %d\n\r", data>>24, data >> 16, data & 0xFFFF);
+			uartTxPoll(UART0_BASE, msg);
+			uartTxPoll(UART0_BASE, msg);
+			
+			char1 = (data>>24) & 0xFF;   //Bits 31-24 : DIRECTION
+			
+			char2 = (data>>16) & 0xFF;	 //Bits 23-16 
+			
+			speed = data & 0xFFFF;       //lower 16 bits: DUTY CYCLE
+			
+			if(char1=='F' & char2 == 'W' )
+			{
+				// Forward
+				drv8833_leftForward(speed);
+				drv8833_rightForward(speed);
+				//ece315_lcdWriteString(1, "DIR: FWD");
+			}
+			else if(char1=='R' & char2 == 'V')
+			{
+				// Reverse
+				drv8833_leftReverse(speed);
+				drv8833_rightReverse(speed);
+				//ece315_lcdWriteString(1, "DIR: REV");
+			}
+			else if(char1=='R' & char2 == 'T')
+			{
+				// Right
+				drv8833_turnRight(speed);
+				//ece315_lcdWriteString(1, "DIR: TURN");
+			}
+			else if(char1=='L' & char2 == 'F')
+			{
+				// Left
+				drv8833_turnLeft(speed);
+				//ece315_lcdWriteString(1, "DIR: TURN");
+			}
+			else if(char1=='S' & char2 == 'T')
+			{
+				// Stop
+				drv8833_halt();
+			}
+			else
+			{
+				// Command not recongized, just halt!
+				drv8833_halt();
+			}
 		
   }
+		
+		if(char1=='F' & char2 == 'W' )
+			{
+				// Forward
+				ece315_lcdWriteString(1, "DIR: FWD");
+			}
+			else if(char1=='R' & char2 == 'V')
+			{
+				// Reverse
+				ece315_lcdWriteString(1, "DIR: REV");
+			}
+			else if(char1=='R' & char2 == 'T')
+			{
+				// Right
+				ece315_lcdWriteString(1, "DIR: TURN");
+			}
+			else if(char1=='L' & char2 == 'F')
+			{
+				// Left
+				ece315_lcdWriteString(1, "DIR: TURN");
+			}
+	  
+		sscanf((char*) leftBuf, "%d", &i);
+		//ece315_lcdWriteString(0, "DIST");
+			
+		//memset (msg,0,80);
+		//sprintf(msg,"DIST: %d%d%d,%d", leftBuf[0], leftBuf[1], leftBuf[2], leftBuf[3]);
+		ece315_lcdWriteString(0, leftBuf);
+		sprintf(console, "Left (polling) : %s\n\r", leftBuf);
+		uartTxPoll(UART0_BASE, console);
+		//ece315_lcdClear();
+}
 }

@@ -19,3 +19,4 @@
 .\obj\lcd.o: C:\AppV\mdk_510\ARM\PACK\Keil\TM4C_DFP\1.0.0\Device\Include\TM4C123\TM4C123.h
 .\obj\lcd.o: ..\include\i2c.h
 .\obj\lcd.o: ../include/spi.h
+.\obj\lcd.o: ..\include\fonts.h
