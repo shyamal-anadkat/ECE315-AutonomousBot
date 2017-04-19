@@ -1,5 +1,5 @@
 Dependencies for Project 'ece353_base_project', Target 'Target 1': (DO NOT MODIFY !)
-F (.\main.c)(0x58F67F5A)(-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I C:\Keil_v5\ARM\Pack\ARM\CMSIS\3.20.4\CMSIS\Include -I ..\include-IC:\ECE315\LAB4\ECE315\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="522" -D_RTE_ -DTM4C123GH6PM-o .\obj\main.o --omf_browse .\obj\main.crf --depend .\obj\main.d)
+F (.\main.c)(0x58F7A337)(-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I C:\Keil_v5\ARM\Pack\ARM\CMSIS\3.20.4\CMSIS\Include -I ..\include-IC:\ECE315\LAB4\ECE315\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="522" -D_RTE_ -DTM4C123GH6PM-o .\obj\main.o --omf_browse .\obj\main.crf --depend .\obj\main.d)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x57F6CB98)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F6CB98)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x57F6CB98)
@@ -24,7 +24,7 @@ I (../include/spi.h)(0x58F53DA7)
 I (drv8833.h)(0x58F55B71)
 I (pwm.h)(0x58F55B71)
 I (..\include\adc.h)(0x58F53DA7)
-F (.\boardUtil.c)(0x58F67F67)(-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I C:\Keil_v5\ARM\Pack\ARM\CMSIS\3.20.4\CMSIS\Include -I ..\include-IC:\ECE315\LAB4\ECE315\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="522" -D_RTE_ -DTM4C123GH6PM-o .\obj\boardutil.o --omf_browse .\obj\boardutil.crf --depend .\obj\boardutil.d)
+F (.\boardUtil.c)(0x58F7A2C5)(-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I C:\Keil_v5\ARM\Pack\ARM\CMSIS\3.20.4\CMSIS\Include -I ..\include-IC:\ECE315\LAB4\ECE315\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="522" -D_RTE_ -DTM4C123GH6PM-o .\obj\boardutil.o --omf_browse .\obj\boardutil.crf --depend .\obj\boardutil.d)
 I (C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123\TM4C123GH6PM.h)(0x551052AC)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include\core_cm4.h)(0x589B44CC)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F6CB98)
@@ -61,7 +61,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x57F6CB98)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x57F6CB98)
 I (..\include\gpioPort.h)(0x58F53DA7)
 I (..\include\i2c.h)(0x58F53DA7)
-F (.\lcd.c)(0x58F67F7A)(-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I C:\Keil_v5\ARM\Pack\ARM\CMSIS\3.20.4\CMSIS\Include -I ..\include-IC:\ECE315\LAB4\ECE315\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="522" -D_RTE_ -DTM4C123GH6PM-o .\obj\lcd.o --omf_browse .\obj\lcd.crf --depend .\obj\lcd.d)
+F (.\lcd.c)(0x58F7A32F)(-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I C:\Keil_v5\ARM\Pack\ARM\CMSIS\3.20.4\CMSIS\Include -I ..\include-IC:\ECE315\LAB4\ECE315\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="522" -D_RTE_ -DTM4C123GH6PM-o .\obj\lcd.o --omf_browse .\obj\lcd.crf --depend .\obj\lcd.d)
 I (lcd.h)(0x58F53DA7)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x57F6CB98)
 I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x57F6CB98)
@@ -118,7 +118,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x57F6CB98)
 I (..\include\uart.h)(0x58F53DA7)
 I (C:\Keil_v5\ARM\ARMCC\include\errno.h)(0x57F6CB96)
 I (..\include\i2c.h)(0x58F53DA7)
-F (.\drv8833.c)(0x58F67F84)(-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I C:\Keil_v5\ARM\Pack\ARM\CMSIS\3.20.4\CMSIS\Include -I ..\include-IC:\ECE315\LAB4\ECE315\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="522" -D_RTE_ -DTM4C123GH6PM-o .\obj\drv8833.o --omf_browse .\obj\drv8833.crf --depend .\obj\drv8833.d)
+F (.\drv8833.c)(0x58F67FA5)(-c --cpu Cortex-M4.fp -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I C:\Keil_v5\ARM\Pack\ARM\CMSIS\3.20.4\CMSIS\Include -I ..\include-IC:\ECE315\LAB4\ECE315\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include-IC:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123-D__UVISION_VERSION="522" -D_RTE_ -DTM4C123GH6PM-o .\obj\drv8833.o --omf_browse .\obj\drv8833.crf --depend .\obj\drv8833.d)
 I (drv8833.h)(0x58F55B71)
 I (C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123\TM4C123GH6PM.h)(0x551052AC)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include\core_cm4.h)(0x589B44CC)

@@ -193,19 +193,21 @@ void ece315_lcdWriteChar( uint8_t page, char c, uint8_t colStart)
 	 const uint8_t* wrdat = &courierNew_10ptBitmaps[(c - 32) * 20];
 	 uint8_t i;
 	 
-   ece315_lcdSetPage(page);
+   ece315_lcdSetPage(page);		//set page 
 	 
+	 //write data loop1 (page)
 	 for (i = colStart; i < colStart + 10; i++) {
 		 ece315_lcdSetColumn(i);
 		 ece315_lcdWriteData(*wrdat);
-		 wrdat++;
+		 wrdat++;			//increment wrdat
 	 }
    ece315_lcdSetPage(page + 1);
 	 
+	 //wr data loop2 (page+1)
 	 for (i = colStart; i < colStart + 10; i++) {
 		 ece315_lcdSetColumn(i);
 		 ece315_lcdWriteData(*wrdat);
-		 wrdat++;
+		 wrdat++;		 //increment data 
 	 }
  }
  
@@ -218,9 +220,9 @@ void ece315_lcdWriteString( uint8_t line, char *string)
 {
 	int i;
   for(i = 0; i < 10; i++){
-		if(string[i] == '\0')
+		if(string[i] == '\0')		//NULL terminator
 			return;
-		ece315_lcdWriteChar( line * 2, string[i], 10*i);
+		ece315_lcdWriteChar( line * 2, string[i], 10*i);	//write string
 	}
 }  
 

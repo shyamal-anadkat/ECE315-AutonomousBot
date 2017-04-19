@@ -24,8 +24,6 @@
 #include "boardUtil.h"
 #include "../include/sysctrl.h"
 
-
-
 void DisableInterrupts(void)
 {
   __asm {

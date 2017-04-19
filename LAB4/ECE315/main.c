@@ -28,7 +28,7 @@
 #include <stdint.h>
 #include <string.h>
 
-//Inlude headers
+//***Include headers***//
 #include "lcd.h"
 #include "TM4C123.h"
 #include "boardUtil.h"
@@ -40,9 +40,9 @@
 //*****************************************************************************
 // Global Variables
 //*****************************************************************************
-char console[50];
-char leftBuf[4];
-float distdata;  
+char console[50]; //for console debug 
+char leftBuf[4];	//for left sonar sensor dist
+float distdata;  	//format distance data
   
 //*****************************************************************************
 // INITIALIZE BOARD AND HARDWARE 
@@ -57,7 +57,7 @@ void initializeBoard(void)
 	rfInit();      		 	//RF-initialization
 	encodersInit(); 		//init encoders
 	sensor_config();		//sensor-config
-	initializeADC(ADC0_BASE);
+	initializeADC(ADC0_BASE);	//init ADC0 base
 	
   EnableInterrupts();
 }
@@ -118,7 +118,6 @@ main(void)
 				ece315_lcdWriteString(1, "DIR: FWD"); 		//print out the direction data 
 				drv8833_leftForward(speed);
 				drv8833_rightForward(speed);
-				//drv8833_halt();
 			}
 			else if(char1=='R' & char2 == 'V')
 			{
@@ -126,7 +125,6 @@ main(void)
 				ece315_lcdWriteString(1, "DIR: REV");			//print the reverse direction data
 				drv8833_leftReverse(speed);
 				drv8833_rightReverse(speed);
-				//drv8833_halt();
 			}
 			else if(char1=='R' & char2 == 'T')
 			{
