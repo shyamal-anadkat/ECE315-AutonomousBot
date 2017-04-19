@@ -8,6 +8,7 @@
 ".\obj\pwm.o"
 ".\obj\ece315_lab3.o"
 ".\obj\drv8833.o"
+".\obj\led_controller.o"
 "..\lib\ece315.lib"
 ".\obj\startup_tm4c123.o"
 ".\obj\system_tm4c123.o"

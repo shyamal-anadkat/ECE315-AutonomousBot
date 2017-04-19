@@ -1,0 +1,13 @@
+.\obj\led_controller.o: ..\drivers\led_controller.c
+.\obj\led_controller.o: ..\include\led_controller.h
+.\obj\led_controller.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\obj\led_controller.o: ..\include\../include/i2c.h
+.\obj\led_controller.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\obj\led_controller.o: C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123\TM4C123GH6PM.h
+.\obj\led_controller.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include\core_cm4.h
+.\obj\led_controller.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include\cmsis_compiler.h
+.\obj\led_controller.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include\cmsis_armcc.h
+.\obj\led_controller.o: C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123\system_TM4C123.h
+.\obj\led_controller.o: ..\include\../include/gpioPort.h
+.\obj\led_controller.o: C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123\TM4C123.h
+.\obj\led_controller.o: ..\include\../include/../include/sysctrl.h

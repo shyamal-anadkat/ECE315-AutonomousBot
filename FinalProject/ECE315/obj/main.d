@@ -23,3 +23,4 @@
 .\obj\main.o: drv8833.h
 .\obj\main.o: pwm.h
 .\obj\main.o: ..\include\adc.h
+.\obj\main.o: ..\include\led_controller.h

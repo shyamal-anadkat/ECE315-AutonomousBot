@@ -35,6 +35,7 @@
 #include "ece315_lab3.h"
 #include "drv8833.h"
 #include "adc.h"
+#include "led_controller.h"
 
 
 //*****************************************************************************
@@ -59,6 +60,7 @@ void initializeBoard(void)
 	sensor_config();		//sensor-config
 	initializeADC(ADC0_BASE);	//init ADC0 base
 	
+	ledController_init(IO_I2C_BASE);
   EnableInterrupts();
 }
 
@@ -156,6 +158,39 @@ main(void)
 		distdata = (float)atof(leftBuf);
 		sprintf((dist + 6), "%f", distdata);
 		ece315_lcdWriteString(0, dist);
+	
+		if(distdata < 8) {
+			//RED LED
+		led_controller_byte_write(IO_I2C_BASE, 0x07, 0xFF);
+		led_controller_byte_write(IO_I2C_BASE, 0x08, 0x00);
+		led_controller_byte_write(IO_I2C_BASE, 0x09, 0x00);
+		
+			// Write all the configureation data to the registers
+    led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);
+			
+		}
+		
+		if(distdata > 8 & distdata < 15) {
+			
+		//YELLOW LED
+		led_controller_byte_write(IO_I2C_BASE, 0x07, 0xFF);
+		led_controller_byte_write(IO_I2C_BASE, 0x08, 0xFF);
+		led_controller_byte_write(IO_I2C_BASE, 0x09, 0x00);
+		
+		// Write all the configureation data to the registers
+    led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);
+		}
+			
+		if(distdata > 15) {
+			
+		//GREEN LED
+		led_controller_byte_write(IO_I2C_BASE, 0x07, 0x00);
+		led_controller_byte_write(IO_I2C_BASE, 0x08, 0xFF);
+		led_controller_byte_write(IO_I2C_BASE, 0x09, 0x00);
+			
+	  // Write all the configureation data to the registers
+    led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);	
+		}
 		
 		// prints out the dist data to debug
 		sprintf(console, "Left (polling) : %s\n\r", leftBuf);

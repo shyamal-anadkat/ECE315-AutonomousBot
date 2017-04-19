@@ -97,6 +97,9 @@ void sensor_config() {
 
 
 
+
+
+
 //*****************************************************************************
 // Configure PF0 (LeftA), PF1(LeftB), PC5(RightA), PC6(RightB)
 // sp that they generate interrupts on rising and falling edges
