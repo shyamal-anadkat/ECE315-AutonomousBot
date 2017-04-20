@@ -118,6 +118,11 @@
 #define   IO_EXPANDER_I2C_SCL_PIN_PCTL  GPIO_PCTL_PA6_I2C1SCL
 #define   IO_EXPANDER_I2C_SDA_PIN_PCTL  GPIO_PCTL_PA7_I2C1SDA
 
+#define TIVA_SONAR_RX (1 << 0)
+#define TIVA_SONAR_TX (1 << 1)
+#define SONAR_PW (1 << 2)
+#define SONAR_AN (1 << 3)
+
 
 void serialDebugInit(void);
 void i2cInit(void);

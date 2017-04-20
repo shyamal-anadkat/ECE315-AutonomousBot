@@ -42,8 +42,18 @@
 // Global Variables
 //*****************************************************************************
 char console[50]; //for console debug 
+
+volatile bool AlertSysTick; 
+volatile bool Alert10ms; 
+volatile bool Alert1s; 
+
 char leftBuf[4];	//for left sonar sensor dist
-float distdata;  	//format distance data
+float left_sensor_readings[5];	// used to get average reading over 5 cycles
+float center_sensor_readings[5];
+uint32_t right_sensor_readings[5];
+float left_sensor;  	//format distance data
+float center_sensor;
+uint32_t right_sensor;
   
 //*****************************************************************************
 // INITIALIZE BOARD AND HARDWARE 
@@ -51,7 +61,7 @@ float distdata;  	//format distance data
 void initializeBoard(void)
 {
   DisableInterrupts();
-	
+	SysTick_Config(2500);
   serialDebugInit();	//serial-debug initialization
 	ece315_lcdInit();   //lcd-init
 	drv8833_gpioInit(); //motors init
@@ -59,9 +69,9 @@ void initializeBoard(void)
 	encodersInit(); 		//init encoders
 	sensor_config();		//sensor-config
 	initializeADC(ADC0_BASE);	//init ADC0 base
-	
 	ledController_init(IO_I2C_BASE);
   EnableInterrupts();
+	
 }
 
 
@@ -78,12 +88,18 @@ main(void)
 	uint8_t char1, char2;
 	uint16_t speed;
 	int i;
+	uint32_t pw = 0;
+	uint32_t temp = 0;
+		uint32_t temp1 = 0;
+	uint8_t high1, high2;	
 	dist[0] = 'D';
 	dist[1] = 'I';
 	dist[2] = 'S';
 	dist[3] = 'T';
 	dist[4] = ':';
 	dist[5] = ' ';
+
+	
 	//******************//
   
 	
@@ -97,70 +113,70 @@ main(void)
   
   while(1)
   {
-		// Check to see when wireless data arrives
-		status = wireless_get_32(false, &data);
+		// update center sensor
+		if(Alert10ms){
+			center_sensor_readings[4] = center_sensor_readings[3];
+			center_sensor_readings[3] = center_sensor_readings[2];
+			center_sensor_readings[2] = center_sensor_readings[1];
+			center_sensor_readings[1] = center_sensor_readings[0];
+			center_sensor_readings[0] = ((getADCValue( ADC0_BASE , 0)) * 3.3 / (0.0064 * 0xFFF)); // 9.8 : 5; 6.4 : 3.3
+			center_sensor = (center_sensor_readings[4] + center_sensor_readings[3] + center_sensor_readings[2] + center_sensor_readings[1] + center_sensor_readings[0]) / 5;
+			Alert10ms = false;
+		}
 		
-		if(status == NRF24L01_RX_SUCCESS)   //success status 
-		{
-			memset (msg,0,80);
-			sprintf(msg,"Data RXed: %c%c %d\n\r", data>>24, data >> 16, data & 0xFFFF);
-			
-			uartTxPoll(UART0_BASE, msg);
-			uartTxPoll(UART0_BASE, msg);
-			
-			char1 = (data>>24) & 0xFF;   //Bits 31-24 : DIRECTION
-			
-			char2 = (data>>16) & 0xFF;	 //Bits 23-16 
-			
-			speed = data & 0xFFFF;       //lower 16 bits: DUTY CYCLE
-			
-			if(char1=='F' & char2 == 'W' )
-			{
-				// Forward
-				ece315_lcdWriteString(1, "DIR: FWD"); 		//print out the direction data 
-				drv8833_leftForward(speed);
-				drv8833_rightForward(speed);
-			}
-			else if(char1=='R' & char2 == 'V')
-			{
-				// Reverse
-				ece315_lcdWriteString(1, "DIR: REV");			//print the reverse direction data
-				drv8833_leftReverse(speed);
-				drv8833_rightReverse(speed);
-			}
-			else if(char1=='R' & char2 == 'T')
-			{
-				// Right
-				ece315_lcdWriteString(1, "DIR: TURN");
-				drv8833_turnRight(speed);
-			}
-			else if(char1=='L' & char2 == 'F')
-			{
-				// Left
-				ece315_lcdWriteString(1, "DIR: TURN");
-				drv8833_turnLeft(speed);
-			}
-			else if(char1=='S' & char2 == 'T')
-			{
-				// Stop
-				ece315_lcdWriteString(1, "DIR: STOP");
-				drv8833_halt();
-			}
-			else
-			{
-				// Command not recongized, just halt!
-				ece315_lcdWriteString(1, "DIR: STOP");
-				drv8833_halt();
-			}
-  }
+		// update left sensor
+		left_sensor_readings[4] = left_sensor_readings[3];
+		left_sensor_readings[3] = left_sensor_readings[2];
+		left_sensor_readings[2] = left_sensor_readings[1];
+		left_sensor_readings[1] = left_sensor_readings[0];
+		left_sensor_readings[0] = (float)atof(leftBuf);
+		left_sensor = (left_sensor_readings[4] + left_sensor_readings[3] + left_sensor_readings[2] + left_sensor_readings[1] + left_sensor_readings[0]) / 5;
 		
-		// prints out distance data in float pointer format 
-		distdata = (float)atof(leftBuf);
-		sprintf((dist + 6), "%f", distdata);
-		ece315_lcdWriteString(0, dist);
+				//detect pulse width 
+		//right sensor
+		
+		if(AlertSysTick){
+			high2 = high1;
+			high1 = ((GPIOE->DATA & SONAR_PW) >> 2);
+			
+			if(high1 && !high2){
+				pw = 50;
+			}
+			else if(high1 && high2){
+				pw = pw + 50;
+			}
+			else if(!high1 && high2){
+						right_sensor_readings[4] = right_sensor_readings[3];
+						right_sensor_readings[3] = right_sensor_readings[2];
+						right_sensor_readings[2] = right_sensor_readings[1];
+						right_sensor_readings[1] = right_sensor_readings[0];
+						right_sensor_readings[0] = (pw / 147);
+						temp = (pw >> 7);
+						right_sensor = (right_sensor_readings[4] + right_sensor_readings[3] + right_sensor_readings[2] + right_sensor_readings[1] + right_sensor_readings[0]) / 5;
+						//right_sensor_readings[0] = pw / 147;
+						pw = 0;
+			}
+			else{
+						pw = 0;
+			}
+			AlertSysTick = false;
+		}
+		
+		memset (msg,0,100);
+		//if(temp>250) {
+		sprintf(msg,"Left: %f, Center: %f, right: %d\n\r",left_sensor, center_sensor, temp);
+		//}
 	
-		if(distdata < 8) {
+			
+			uartTxPoll(UART0_BASE, msg);
+		
+		speed = 0x7F;
+		
+		
+	 //****LED CONTROLLER*****//
+	 if(left_sensor < 8) {
 			//RED LED
+		 ledController_init(IO_I2C_BASE);
 		led_controller_byte_write(IO_I2C_BASE, 0x07, 0xFF);
 		led_controller_byte_write(IO_I2C_BASE, 0x08, 0x00);
 		led_controller_byte_write(IO_I2C_BASE, 0x09, 0x00);
@@ -170,8 +186,8 @@ main(void)
 			
 		}
 		
-		if(distdata > 8 & distdata < 15) {
-			
+		if(left_sensor > 8 & left_sensor < 15) {
+			ledController_init(IO_I2C_BASE);
 		//YELLOW LED
 		led_controller_byte_write(IO_I2C_BASE, 0x07, 0xFF);
 		led_controller_byte_write(IO_I2C_BASE, 0x08, 0xFF);
@@ -181,8 +197,8 @@ main(void)
     led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);
 		}
 			
-		if(distdata > 15) {
-			
+		if(left_sensor > 15) {
+			ledController_init(IO_I2C_BASE);
 		//GREEN LED
 		led_controller_byte_write(IO_I2C_BASE, 0x07, 0x00);
 		led_controller_byte_write(IO_I2C_BASE, 0x08, 0xFF);
@@ -192,9 +208,94 @@ main(void)
     led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);	
 		}
 		
-		// prints out the dist data to debug
-		sprintf(console, "Left (polling) : %s\n\r", leftBuf);
-		uartTxPoll(UART0_BASE, console);
-		// ece315_lcdClear();
+	// RIGHT SENSOR
+		
+	 if(right_sensor < 8) {
+			//RED LED
+		led_controller_byte_write(IO_I2C_BASE, 0x0D, 0xFF);
+		led_controller_byte_write(IO_I2C_BASE, 0x0E, 0x00);
+		led_controller_byte_write(IO_I2C_BASE, 0x0F, 0x00);
+		
+			// Write all the configureation data to the registers
+    led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);
+			
+		}
+		
+		if(right_sensor > 8 & right_sensor < 15) {
+			
+		//YELLOW LED
+		led_controller_byte_write(IO_I2C_BASE, 0x0D, 0xFF);
+		led_controller_byte_write(IO_I2C_BASE, 0x0E, 0xFF);
+		led_controller_byte_write(IO_I2C_BASE, 0x0F, 0x00);
+		
+		// Write all the configureation data to the registers
+    led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);
+		}
+			
+		if(right_sensor > 15) {
+			
+		//GREEN LED
+		led_controller_byte_write(IO_I2C_BASE, 0x0D, 0x00);
+		led_controller_byte_write(IO_I2C_BASE, 0x0E, 0xFF);
+		led_controller_byte_write(IO_I2C_BASE, 0x0F, 0x00);
+			
+	  // Write all the configureation data to the registers
+    led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);	
+		}
+		
+		
+		//CENTER SENSOR
+	 if(center_sensor < 8) {
+			//RED LED
+		led_controller_byte_write(IO_I2C_BASE, 0x0A, 0xFF);
+		led_controller_byte_write(IO_I2C_BASE, 0x0B, 0x00);
+		led_controller_byte_write(IO_I2C_BASE, 0x0C, 0x00);
+		
+			// Write all the configureation data to the registers
+    led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);
+			
+		}
+		
+		if(center_sensor > 8 & center_sensor < 15) {
+			
+		//YELLOW LED
+		led_controller_byte_write(IO_I2C_BASE, 0x0A, 0xFF);
+		led_controller_byte_write(IO_I2C_BASE, 0x0B, 0xFF);
+		led_controller_byte_write(IO_I2C_BASE, 0x0C, 0x00);
+		
+		// Write all the configureation data to the registers
+    led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);
+		}
+			
+		if(center_sensor > 15) {
+			
+		//GREEN LED
+		led_controller_byte_write(IO_I2C_BASE, 0x0A, 0x00);
+		led_controller_byte_write(IO_I2C_BASE, 0x0B, 0xFF);
+		led_controller_byte_write(IO_I2C_BASE, 0x0C, 0x00);
+			
+	  // Write all the configureation data to the registers
+    led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);	
+		}
+		
+		drv8833_halt();
+		
+		if(left_sensor <= 10){
+				if(center_sensor <= 10){
+					drv8833_rightForward(speed);
+			} else {
+					drv8833_leftForward(speed);
+					drv8833_rightForward(speed);
+			}
+
+		} else {
+				if(center_sensor <= 10){
+				  drv8833_rightForward(speed);
+				} else {
+					drv8833_leftForward(speed);
+				}
+			
+		}
+		
 	}
 }
