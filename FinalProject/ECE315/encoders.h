@@ -3,5 +3,6 @@
 
 //**function declarations***
 float encode(float inches);
+int pulse_to_inches(int pulse);
 
 #endif

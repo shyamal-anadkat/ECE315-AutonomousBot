@@ -36,6 +36,7 @@
 #include "drv8833.h"
 #include "adc.h"
 #include "led_controller.h"
+#include "encoders.h"
 
 
 //*****************************************************************************
@@ -44,8 +45,12 @@
 char console[50]; //for console debug 
 
 volatile bool AlertSysTick; 
-volatile bool Alert10ms; 
-volatile bool Alert1s; 
+volatile bool Alert10msA; 
+volatile bool Alert10msB;
+volatile bool Alert30ms; 
+volatile bool Alert1sA;
+volatile bool Alert1sB; 
+extern uint32_t leftA_pulse;
 
 char leftBuf[4];	//for left sonar sensor dist
 float left_sensor_readings[5];	// used to get average reading over 5 cycles
@@ -54,6 +59,8 @@ uint32_t right_sensor_readings[5];
 float left_sensor;  	//format distance data
 float center_sensor;
 uint32_t right_sensor;
+uint32_t inches;
+//typedef enum {RIGHT};
   
 //*****************************************************************************
 // INITIALIZE BOARD AND HARDWARE 
@@ -86,12 +93,16 @@ main(void)
 	wireless_com_status_t status;
 	uint32_t data;
 	uint8_t char1, char2;
-	uint16_t speed;
+	uint16_t slow_speed;
+	uint16_t medium_speed;
+	uint16_t fast_speed;
 	int i;
 	uint32_t pw = 0;
 	uint32_t temp = 0;
-		uint32_t temp1 = 0;
+  uint32_t temp1 = 0;
 	uint8_t high1, high2;	
+	bool right_turn = false;
+	uint8_t left_count = 0;
 	dist[0] = 'D';
 	dist[1] = 'I';
 	dist[2] = 'S';
@@ -113,15 +124,23 @@ main(void)
   
   while(1)
   {
+		if(Alert1sA){
+			memset (msg,0,80);
+			inches = pulse_to_inches(leftA_pulse);
+			sprintf(msg,"Dist: %i", inches);
+			ece315_lcdWriteString(0, msg);
+			Alert1sA = false;
+		}
+		
 		// update center sensor
-		if(Alert10ms){
+		if(Alert10msA){
 			center_sensor_readings[4] = center_sensor_readings[3];
 			center_sensor_readings[3] = center_sensor_readings[2];
 			center_sensor_readings[2] = center_sensor_readings[1];
 			center_sensor_readings[1] = center_sensor_readings[0];
 			center_sensor_readings[0] = ((getADCValue( ADC0_BASE , 0)) * 3.3 / (0.0064 * 0xFFF)); // 9.8 : 5; 6.4 : 3.3
 			center_sensor = (center_sensor_readings[4] + center_sensor_readings[3] + center_sensor_readings[2] + center_sensor_readings[1] + center_sensor_readings[0]) / 5;
-			Alert10ms = false;
+			Alert10msA = false;
 		}
 		
 		// update left sensor
@@ -132,10 +151,11 @@ main(void)
 		left_sensor_readings[0] = (float)atof(leftBuf);
 		left_sensor = (left_sensor_readings[4] + left_sensor_readings[3] + left_sensor_readings[2] + left_sensor_readings[1] + left_sensor_readings[0]) / 5;
 		
-				//detect pulse width 
+		//detect pulse width 
 		//right sensor
 		
-		if(AlertSysTick){
+		// NOT USING RIGHT SENSOR FOR NOW
+		/*if(AlertSysTick){
 			high2 = high1;
 			high1 = ((GPIOE->DATA & SONAR_PW) >> 2);
 			
@@ -160,7 +180,7 @@ main(void)
 						pw = 0;
 			}
 			AlertSysTick = false;
-		}
+		}*/
 		
 		memset (msg,0,100);
 		//if(temp>250) {
@@ -168,11 +188,58 @@ main(void)
 		//}
 	
 			
-			uartTxPoll(UART0_BASE, msg);
+	 uartTxPoll(UART0_BASE, msg);
 		
-		speed = 0x7F;
+		slow_speed = 0x3F;
+		medium_speed = 0x7F;
+		fast_speed = 0xFF;
 		
 		
+	
+		
+		// RIGHT SENSOR
+		 /*
+		 if(right_sensor < 8) {
+				//RED LED
+			led_controller_byte_write(IO_I2C_BASE, 0x0D, 0xFF);
+			led_controller_byte_write(IO_I2C_BASE, 0x0E, 0x00);
+			led_controller_byte_write(IO_I2C_BASE, 0x0F, 0x00);
+			
+				// Write all the configureation data to the registers
+			led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);
+				
+			}
+			
+			if(right_sensor > 8 & right_sensor < 15) {
+				
+			//YELLOW LED
+			led_controller_byte_write(IO_I2C_BASE, 0x0D, 0xFF);
+			led_controller_byte_write(IO_I2C_BASE, 0x0E, 0xFF);
+			led_controller_byte_write(IO_I2C_BASE, 0x0F, 0x00);
+			
+			// Write all the configureation data to the registers
+			led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);
+			}
+				
+			if(right_sensor > 15) {
+				
+			//GREEN LED
+			led_controller_byte_write(IO_I2C_BASE, 0x0D, 0x00);
+			led_controller_byte_write(IO_I2C_BASE, 0x0E, 0xFF);
+			led_controller_byte_write(IO_I2C_BASE, 0x0F, 0x00);
+				
+			// Write all the configureation data to the registers
+			led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);	
+			} */
+		
+		
+
+		
+		
+		
+		if(Alert30ms){
+			//DisableInterrupts();
+	
 	 //****LED CONTROLLER*****//
 	 if(left_sensor < 8) {
 			//RED LED
@@ -207,43 +274,9 @@ main(void)
 	  // Write all the configureation data to the registers
     led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);	
 		}
-		
-	// RIGHT SENSOR
-		
-	 if(right_sensor < 8) {
-			//RED LED
-		led_controller_byte_write(IO_I2C_BASE, 0x0D, 0xFF);
-		led_controller_byte_write(IO_I2C_BASE, 0x0E, 0x00);
-		led_controller_byte_write(IO_I2C_BASE, 0x0F, 0x00);
-		
-			// Write all the configureation data to the registers
-    led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);
 			
-		}
 		
-		if(right_sensor > 8 & right_sensor < 15) {
 			
-		//YELLOW LED
-		led_controller_byte_write(IO_I2C_BASE, 0x0D, 0xFF);
-		led_controller_byte_write(IO_I2C_BASE, 0x0E, 0xFF);
-		led_controller_byte_write(IO_I2C_BASE, 0x0F, 0x00);
-		
-		// Write all the configureation data to the registers
-    led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);
-		}
-			
-		if(right_sensor > 15) {
-			
-		//GREEN LED
-		led_controller_byte_write(IO_I2C_BASE, 0x0D, 0x00);
-		led_controller_byte_write(IO_I2C_BASE, 0x0E, 0xFF);
-		led_controller_byte_write(IO_I2C_BASE, 0x0F, 0x00);
-			
-	  // Write all the configureation data to the registers
-    led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);	
-		}
-		
-		
 		//CENTER SENSOR
 	 if(center_sensor < 8) {
 			//RED LED
@@ -277,25 +310,50 @@ main(void)
 	  // Write all the configureation data to the registers
     led_controller_byte_write(IO_I2C_BASE, 0x10, 0x00);	
 		}
-		
-		drv8833_halt();
-		
-		if(left_sensor <= 10){
-				if(center_sensor <= 10){
-					drv8833_rightForward(speed);
-			} else {
-					drv8833_leftForward(speed);
-					drv8833_rightForward(speed);
-			}
 
-		} else {
-				if(center_sensor <= 10){
-				  drv8833_rightForward(speed);
+
+			//drv8833_halt();
+			if((left_sensor >= 9 && left_sensor <= 11) || right_turn){
+				if(center_sensor < 7 && ~right_turn) {
+						// Wall to the left and ahead -> Turn Right
+						drv8833_leftForward(slow_speed);
+						drv8833_rightReverse(slow_speed);
+						right_turn = true;	// When asserted, turn right until center sensor doesn't see wall
+				} else if(center_sensor < 9) {
+						// Wall to the left and ahead -> Turn Right
+						drv8833_leftForward(slow_speed);
+						drv8833_rightReverse(slow_speed);
+						right_turn = true;	// When asserted, turn right until center sensor doesn't see wall
 				} else {
-					drv8833_leftForward(speed);
+						// Wall to the left -> Drive Straight
+						drv8833_leftForward(slow_speed);
+						drv8833_rightForward(slow_speed);
+						right_turn = false;
 				}
-			
+			} else if(left_sensor > 15){
+						// Drifting Right -> Turn Left
+						left_count = (left_count + 1) % 8;
+						if(left_count < 3) {
+							drv8833_leftReverse(fast_speed);
+							drv8833_rightForward(fast_speed); 
+						} else {
+						drv8833_leftForward(slow_speed);
+						drv8833_rightForward(slow_speed);
+						}
+			} else if(left_sensor > 11){
+						// Drifting Right -> Turn Left
+						drv8833_leftReverse(slow_speed);
+						drv8833_rightForward(slow_speed);
+			} else {
+						// Drifting Left -> Turn Right
+						drv8833_leftForward(slow_speed);
+						drv8833_rightReverse(slow_speed);
+			}
+			Alert30ms = false;
+			//EnableInterrupts();
 		}
+		
+			
 		
 	}
 }

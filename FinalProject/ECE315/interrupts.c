@@ -8,9 +8,12 @@ Circular Buffers need not be implemented but UART FIFOs should be enabled.
 */
 extern volatile char leftBuf[4];
 extern volatile bool AlertSysTick; //50us
-extern volatile bool Alert10ms; // 10ms
-extern volatile bool Alert1s;   //  1s
-
+extern volatile bool Alert10msA; // 10ms
+extern volatile bool Alert10msB; // 10ms
+extern volatile bool Alert30ms; // 30ms
+extern volatile bool Alert1sA;   //  1s for display
+extern volatile bool Alert1sB;   
+volatile uint32_t leftA_pulse = 0;
 
 // systick handler which keeps track of the count
 void SysTick_Handler(void){
@@ -18,20 +21,41 @@ void SysTick_Handler(void){
 	uint32_t val;
 	static uint32_t cnt1 = 0;
 	static uint32_t cnt2 = 0;
+	static uint32_t cnt3 = 0;
+	static uint32_t cnt4 = 0;
+	
 	AlertSysTick = true;
 	
+	if(!Alert10msA) {
 	cnt1++;
+	}
+	if(!Alert1sA) {
 	cnt2++;
+	}
+	if(!Alert30ms) {
+	cnt3++;
+	}
+	if(!Alert1sB) {
+	cnt4++; 
+	}
 	
 	// get the range and update count 
 	if(cnt1 > 199){
-		Alert10ms = true;
+		Alert10msA = true;
+		//Alert10msB = true;
 		cnt1 = 0;
 	}
 	
+	if(cnt3 > 599) {
+		Alert30ms = true;
+		cnt3 = 0;
+	}
+	
 	if(cnt2 >= 20000){
-		Alert1s = true;
+		Alert1sA = true;
+		Alert1sB = true;
 		cnt2 = 0;
+		cnt4 = 0; 
 	}
 	
 	val = SysTick->VAL;
@@ -57,7 +81,7 @@ void UART7_Handler(void){
 // GPIOF HANDLER (PF0 and PF1)
 void GPIOF_Handler(void){
 		if(GPIOF->RIS & PF0){
-			//leftA_pulse++;
+			leftA_pulse++;
 			GPIOF->ICR |= PF0;  //clear interrupt 
 		}
 		if(GPIOF->RIS& PF1){
