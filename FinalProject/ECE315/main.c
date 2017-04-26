@@ -313,39 +313,51 @@ main(void)
 
 
 			//drv8833_halt();
-			if((left_sensor >= 9 && left_sensor <= 11) || right_turn){
-				if(center_sensor < 7 && ~right_turn) {
+			if((left_sensor >= 8 && left_sensor <= 9) || right_turn){
+				if(right_turn){
+					// Turn right
+						drv8833_leftForward(slow_speed);
+						drv8833_rightReverse(slow_speed);
+					if(left_sensor > 10){
+						right_turn = false;
+					}else {
+						right_turn = true;
+				}
+				} else if(center_sensor < 7) {
 						// Wall to the left and ahead -> Turn Right
 						drv8833_leftForward(slow_speed);
 						drv8833_rightReverse(slow_speed);
-						right_turn = true;	// When asserted, turn right until center sensor doesn't see wall
-				} else if(center_sensor < 9) {
-						// Wall to the left and ahead -> Turn Right
-						drv8833_leftForward(slow_speed);
-						drv8833_rightReverse(slow_speed);
-						right_turn = true;	// When asserted, turn right until center sensor doesn't see wall
+						right_turn = true;	// When asserted, turn right until left sensor doesn't see wall
 				} else {
 						// Wall to the left -> Drive Straight
 						drv8833_leftForward(slow_speed);
 						drv8833_rightForward(slow_speed);
 						right_turn = false;
 				}
-			} else if(left_sensor > 15){
-						// Drifting Right -> Turn Left
-						left_count = (left_count + 1) % 8;
-						if(left_count < 3) {
-							drv8833_leftReverse(fast_speed);
-							drv8833_rightForward(fast_speed); 
+			} else if(left_sensor > 10){
+						if(center_sensor < 12){
+							// Wall ahead, drive to it
+							drv8833_leftForward(slow_speed);
+							drv8833_rightForward(slow_speed);
+							
 						} else {
-						drv8833_leftForward(slow_speed);
-						drv8833_rightForward(slow_speed);
+				
+							// Nothing left or right -> Turn Left
+							left_count = (left_count + 1) % 8;
+							if(left_count < 3) {
+								drv8833_leftReverse(slow_speed);
+								drv8833_rightForward(slow_speed); 
+							} else {
+							drv8833_leftForward(slow_speed);
+							drv8833_rightForward(slow_speed);
 						}
-			} else if(left_sensor > 11){
-						// Drifting Right -> Turn Left
+					}
+			} else if(left_sensor > 9){
+						// Drifting Right -> Drift Left
 						drv8833_leftReverse(slow_speed);
 						drv8833_rightForward(slow_speed);
 			} else {
-						// Drifting Left -> Turn Right
+						// Drifting Left -> Drift Right
 						drv8833_leftForward(slow_speed);
 						drv8833_rightReverse(slow_speed);
 			}
